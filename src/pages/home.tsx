@@ -3,30 +3,20 @@ import type { Player } from "@/types/player";
 import { List } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getPlayersPage, playersMock } from "@/mocks/players";
 import { Header, InfoCard, Pagination, PlayersTable } from "./components";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
 const Home: React.FC = () => {
-  const [players, setPlayers] = useState<Player[]>([]);
   const [page, setPage] = useState(1);
-  const [limit] = useState(7);
+  const [limit] = useState(9);
+  const [search, setSearch] = useState("");
 
-  const aboveAverage = playersMock.filter((player) => player.score > 3).length;
+  const aboveAverage = playersMock.filter((player) => player.score >= 3).length;
   const belowAverage = playersMock.filter((player) => player.score < 3).length;
-  const matchList = ["1"];
+  const matchList = ["1", "2"];
 
-  useEffect(() => {
-    setPlayers(getPlayersPage(page, limit));
-  }, [page, limit, playersMock]);
+  const players: Player[] = getPlayersPage(page, limit, search);
 
   return (
     <div className="h-screen w-full">
@@ -48,19 +38,13 @@ const Home: React.FC = () => {
           <Input
             className="w-[250px]"
             placeholder="Pesquisar nome do jogador..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
           />
-          <Select>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filtrar por nota" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light">Na média ou acima</SelectItem>
-              <SelectItem value="system">Abaixo da média</SelectItem>
-            </SelectContent>
-          </Select>
+
           <Button variant="outline">
             <List />
-            Visualisar lista do Racha
+            Visualizar lista do Racha
             {matchList.length > 0 && (
               <span className="flex items-center justify-center rounded-xl bg-[#fa6800] px-2 text-white">
                 {matchList.length}
@@ -72,14 +56,16 @@ const Home: React.FC = () => {
           <div className="mt-4">
             <PlayersTable data={players} />
             <div className="mt-4 pb-6">
-              <Pagination
-                pageIndex={page - 1}
-                perPage={limit}
-                totalCount={playersMock?.length}
-                onPageChange={(newPageIndex: number) =>
-                  setPage(newPageIndex + 1)
-                }
-              />
+              {!search.length && (
+                <Pagination
+                  pageIndex={page - 1}
+                  perPage={limit}
+                  totalCount={playersMock?.length}
+                  onPageChange={(newPageIndex: number) =>
+                    setPage(newPageIndex + 1)
+                  }
+                />
+              )}
             </div>
           </div>
         ) : (

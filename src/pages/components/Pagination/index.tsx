@@ -28,7 +28,9 @@ const Pagination: React.FC<PaginationProps> = ({
       <div className="text-muted-foreground space-x-1 text-sm whitespace-nowrap">
         <span className="hidden md:inline">Total de</span>
         <span>{totalCount}</span>
-        <span>{totalCount > 0 && totalCount < 2 ? "item" : "itens"}</span>
+        <span>
+          {totalCount > 0 && totalCount < 2 ? "jogador" : "jogadores"}
+        </span>
       </div>
       <div className="flex items-center gap-6 lg:gap-8">
         <div className="text-sm font-medium">

@@ -22,13 +22,13 @@ const cardConfig: Record<
     description: "Número total de jogadores.",
   },
   "above-average": {
-    title: "Acima da média",
-    icon: <ArrowUp className="h-6 w-6 text-green-500" />,
-    description: "Número de jogadores acima da média.",
+    title: "Na média ou acima",
+    icon: <ArrowUp className="h-6 w-6 text-green-400" />,
+    description: "Número de jogadores na média ou acima.",
   },
   "below-average": {
     title: "Abaixo da média",
-    icon: <ArrowDown className="h-6 w-6 text-red-500" />,
+    icon: <ArrowDown className="h-6 w-6 text-red-400" />,
     description: "Número de jogadores abaixo da média.",
   },
 };
