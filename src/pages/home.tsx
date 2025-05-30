@@ -46,7 +46,7 @@ const Home: React.FC = () => {
             <List />
             Visualizar lista do Racha
             {matchList.length > 0 && (
-              <span className="flex items-center justify-center rounded-xl bg-green-500 px-2 text-white">
+              <span className="flex items-center justify-center rounded-xl bg-[#8e54ff] px-2 text-white">
                 {matchList.length}
               </span>
             )}
@@ -55,7 +55,7 @@ const Home: React.FC = () => {
         {players.length > 0 ? (
           <div className="mt-4">
             <PlayersTable data={players} />
-            <div className="mt-4 pb-6">
+            <div className="mt-4">
               {!search.length && (
                 <Pagination
                   pageIndex={page - 1}
