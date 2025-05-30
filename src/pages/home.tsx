@@ -1,11 +1,32 @@
-import { players } from "@/mocks/players";
-import Header from "./components/Header";
-import { InfoCard } from "./components/Info-Card";
+import type { Player } from "@/types/player";
+
+import { List } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useEffect, useState } from "react";
+import { getPlayersPage, playersMock } from "@/mocks/players";
+import { Header, InfoCard, Pagination, PlayersTable } from "./components";
+
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Home: React.FC = () => {
-  const data = players;
-  const aboveAverage = data.filter((player) => player.score > 3).length;
-  const belowAverage = data.filter((player) => player.score < 3).length;
+  const [players, setPlayers] = useState<Player[]>([]);
+  const [page, setPage] = useState(1);
+  const [limit] = useState(7);
+
+  const aboveAverage = playersMock.filter((player) => player.score > 3).length;
+  const belowAverage = playersMock.filter((player) => player.score < 3).length;
+  const matchList = ["1"];
+
+  useEffect(() => {
+    setPlayers(getPlayersPage(page, limit));
+  }, [page, limit, playersMock]);
 
   return (
     <div className="h-screen w-full">
@@ -17,12 +38,57 @@ const Home: React.FC = () => {
           </h1>
           <div className="flex flex-col gap-4">
             <div className="flex flex-col items-center justify-center gap-6 lg:flex-row">
-              <InfoCard type="total" data={data.length} />
+              <InfoCard type="total" data={playersMock.length} />
               <InfoCard type="above-average" data={aboveAverage} />
               <InfoCard type="below-average" data={belowAverage} />
             </div>
           </div>
         </div>
+        <div className="mt-2 flex items-center justify-end gap-4 pr-8 pl-4">
+          <Input
+            className="w-[250px]"
+            placeholder="Pesquisar nome do jogador..."
+          />
+          <Select>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Filtrar por nota" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="light">Na média ou acima</SelectItem>
+              <SelectItem value="system">Abaixo da média</SelectItem>
+            </SelectContent>
+          </Select>
+          <Button variant="outline">
+            <List />
+            Visualisar lista do Racha
+            {matchList.length > 0 && (
+              <span className="flex items-center justify-center rounded-xl bg-[#fa6800] px-2 text-white">
+                {matchList.length}
+              </span>
+            )}
+          </Button>
+        </div>
+        {players.length > 0 ? (
+          <div className="mt-4">
+            <PlayersTable data={players} />
+            <div className="mt-4 pb-6">
+              <Pagination
+                pageIndex={page - 1}
+                perPage={limit}
+                totalCount={playersMock?.length}
+                onPageChange={(newPageIndex: number) =>
+                  setPage(newPageIndex + 1)
+                }
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="flex h-64 items-center justify-center">
+            <span className="text-muted-foreground">
+              Sem jogadores por aqui.
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

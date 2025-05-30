@@ -1,13 +1,13 @@
 import type { Player } from "@/types/player";
 
-const players: Player[] = [
+const playersMock: Player[] = [
+  { id: "e1f2", name: "Marcelo Santana", score: 4.1, position: "MEI" },
   { id: "a1b2", name: "Davi Silva", score: 1.5, position: "ATA" },
   { id: "c3d4", name: "Lucas Barbosa", score: 4.2, position: "MEI" },
   { id: "e5f6", name: "Gledson Junior", score: 4.6, position: "DEF" },
   { id: "g7h8", name: "Dhonatas Sousa", score: 2.1, position: "MEI" },
   { id: "i9j0", name: "Sergio Filho", score: 4.4, position: "DEF" },
   { id: "k1l2", name: "Assis Felix", score: 2.6, position: "ATA" },
-  { id: "m3n4", name: "Mateus Felipe", score: 1.3, position: "DEF" },
   { id: "o5p6", name: "Matheus Felipe", score: 3.9, position: "MEI" },
   { id: "q7r8", name: "Matheus Araujo", score: 4.4, position: "MEI" },
   { id: "s9t0", name: "Rodrigo Saldanha", score: 3.9, position: "MEI" },
@@ -16,7 +16,6 @@ const players: Player[] = [
   { id: "y5z6", name: "Pedro Lyvio", score: 2.54, position: "DEF" },
   { id: "a7b8", name: "Manoel Hudson", score: 4.6, position: "ATA" },
   { id: "c9d0", name: "Pedro Henrique", score: 1.5, position: "DEF" },
-  { id: "e1f2", name: "Marcelo Santana", score: 4.1, position: "MEI" },
   { id: "g3h4", name: "Felipe Rodrigues", score: 2.0, position: "DEF" },
   { id: "k7l8", name: "Roberto Olavo", score: 1.4, position: "DEF" },
   { id: "m9n0", name: "Yago Capistrano", score: 1.2, position: "MEI" },
@@ -62,6 +61,17 @@ const players: Player[] = [
   { id: "o9p0", name: "Carlos Victor", score: 3.0, position: "DEF" },
   { id: "q1r2", name: "Leodecio Segundo", score: 3.8, position: "MEI" },
   { id: "s3t4", name: "Afonso Neto", score: 3.0, position: "MEI" },
+  {
+    id: "m3n4",
+    name: "Mateus Felipe - Ex Goleiro",
+    score: 1.3,
+    position: "DEF",
+  },
 ];
 
-export { players };
+function getPlayersPage(page: number, pageSize = 10): Player[] {
+  const start = (page - 1) * pageSize;
+  return playersMock.slice(start, start + pageSize);
+}
+
+export { playersMock, getPlayersPage };

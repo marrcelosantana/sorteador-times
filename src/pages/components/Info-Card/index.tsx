@@ -33,7 +33,7 @@ const cardConfig: Record<
   },
 };
 
-const InfoCard = ({ type, data }: InfoCardProps) => {
+const InfoCard: React.FC<InfoCardProps> = ({ type, data }) => {
   const { title, icon, description } = cardConfig[type];
 
   return (
@@ -52,4 +52,4 @@ const InfoCard = ({ type, data }: InfoCardProps) => {
   );
 };
 
-export { InfoCard };
+export default InfoCard;
