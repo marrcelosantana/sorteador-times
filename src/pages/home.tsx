@@ -9,7 +9,7 @@ import { Header, InfoCard, Pagination, PlayersTable } from "./components";
 
 const Home: React.FC = () => {
   const [page, setPage] = useState(1);
-  const [limit] = useState(9);
+  const [limit] = useState(7);
   const [search, setSearch] = useState("");
 
   const aboveAverage = playersMock.filter((player) => player.score >= 3).length;
@@ -46,7 +46,7 @@ const Home: React.FC = () => {
             <List />
             Visualizar lista do Racha
             {matchList.length > 0 && (
-              <span className="flex items-center justify-center rounded-xl bg-[#fa6800] px-2 text-white">
+              <span className="flex items-center justify-center rounded-xl bg-green-500 px-2 text-white">
                 {matchList.length}
               </span>
             )}
