@@ -1,7 +1,7 @@
+import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { Button } from "@/components/ui/button";
+import { Separator } from "@/components/ui/separator";
 import { Plus, Trophy } from "lucide-react";
-import { ThemeToggle } from "./theme/theme-toggle";
-import { Button } from "./ui/button";
-import { Separator } from "./ui/separator";
 
 const Header: React.FC = () => {
   return (
