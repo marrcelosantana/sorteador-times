@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
 import type { Player } from "@/types/player";
+import React from "react";
+
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { usePlayers } from "@/hooks/usePlayers";
 
 import {
   Table,
@@ -12,7 +14,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { usePlayers } from "@/hooks/usePlayers";
 
 interface PlayersTableProps {
   data: Player[];

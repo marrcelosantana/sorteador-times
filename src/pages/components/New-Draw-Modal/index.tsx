@@ -79,7 +79,7 @@ const NewDrawModal: React.FC<NewDrawModalProps> = () => {
             </Button>
           </DialogClose>
           <Button variant="default" type="submit" className="ml-2 text-white">
-            Formar racha
+            Sortear
           </Button>
         </DialogFooter>
       </form>

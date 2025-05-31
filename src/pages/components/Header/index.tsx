@@ -17,6 +17,12 @@ const Header: React.FC = () => {
         <Separator orientation="vertical" className="!h-6" />
         <span className="text-xl">Sorteador de times</span>
       </div>
+      {/* <div className="py-4 text-center">
+        <span className="text-muted-foreground text-xs">
+          Criado por Marcelo Santana
+        </span>
+        <Copyright className="text-muted-foreground ml-1 inline h-4 w-4" />
+      </div> */}
       <div className="flex items-center justify-center gap-2">
         <Dialog open={modalOpen} onOpenChange={setModalOpen}>
           <DialogTrigger asChild>

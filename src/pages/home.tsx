@@ -60,7 +60,7 @@ const Home: React.FC = () => {
             <DialogTrigger asChild>
               <Button variant="outline">
                 <List />
-                Visualizar lista do Racha
+                Visualizar lista do racha
                 {matchList.length > 0 && (
                   <span className="flex items-center justify-center rounded-xl bg-[#fb2c36] px-2 text-white">
                     {matchList.length}
@@ -74,7 +74,7 @@ const Home: React.FC = () => {
         {players.length > 0 ? (
           <div className="mt-4">
             <PlayersTable data={players} />
-            <div className="mt-4">
+            <div className="mt-4 pb-4">
               {!search.length && (
                 <Pagination
                   pageIndex={page - 1}

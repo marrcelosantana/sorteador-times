@@ -15,7 +15,10 @@ interface PlayersProviderProps {
 export const PlayersContext = createContext({} as PlayersContextType);
 
 export function PlayersProvider({ children }: PlayersProviderProps) {
-  const [matchList, setMatchList] = useState<Player[]>([]);
+  const [matchList, setMatchList] = useState<Player[]>(() => {
+    const stored = localStorage.getItem("matchList");
+    return stored ? JSON.parse(stored) : [];
+  });
 
   function addOrRemoveFromMatchList(player: Player) {
     setMatchList((prev) => {
@@ -36,11 +39,6 @@ export function PlayersProvider({ children }: PlayersProviderProps) {
   const isPlayerInMatchList = (player: Player) => {
     return matchList.some((p) => p.id === player.id);
   };
-
-  useEffect(() => {
-    const stored = localStorage.getItem("matchList");
-    setMatchList(stored ? JSON.parse(stored) : []);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("matchList", JSON.stringify(matchList));

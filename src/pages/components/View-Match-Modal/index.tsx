@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { usePlayers } from "@/hooks/usePlayers";
-import { BrushCleaning, Trash } from "lucide-react";
+import { BrushCleaning, OctagonX, Trash2 } from "lucide-react";
 
 import {
   DialogClose,
@@ -16,28 +16,17 @@ import {
 const ViewMatchModal: React.FC = () => {
   const { matchList, addOrRemoveFromMatchList, clearMatchList } = usePlayers();
 
-  const matchAverage =
-    matchList.reduce((acc, player) => acc + player.score, 0) /
-      matchList.length || 0;
-
   return (
     <DialogContent className="h-[500px]">
       <DialogHeader>
-        <DialogTitle className="text-2xl">Lista do Racha</DialogTitle>
+        <DialogTitle className="text-2xl">Lista do racha</DialogTitle>
         <DialogDescription>
-          Esses são os jogadores que estão na lista do Racha.
+          Esses são os jogadores que estão na lista do racha.
         </DialogDescription>
-        {matchList.length > 0 && (
-          <div className="mb-4">
-            <span className="text-muted-foreground text-sm">
-              Média dos jogadores: {matchAverage.toFixed(2)}
-            </span>
-          </div>
-        )}
       </DialogHeader>
       <div className="!-mt-[32px] w-full">
         {matchList.length ? (
-          <ScrollArea className="flex h-[250px] w-full rounded-md border p-4">
+          <ScrollArea className="flex h-[300px] w-full rounded-md border p-4">
             {matchList.map((player, idx) => (
               <div key={idx} className="mb-2 flex w-full gap-2 text-sm">
                 <div className="flex w-full gap-2">
@@ -55,19 +44,19 @@ const ViewMatchModal: React.FC = () => {
                   </span>
                 </div>
                 <button
-                  className="cursor-pointer text-red-400 hover:text-red-500"
+                  className="cursor-pointer text-red-500 hover:text-red-600"
                   onClick={() => addOrRemoveFromMatchList(player)}
+                  aria-label="Remover jogador"
                 >
-                  <Trash className="h-4 w-4" />
+                  <Trash2 className="h-4 w-4" />
                 </button>
               </div>
             ))}
           </ScrollArea>
         ) : (
-          <div className="flex h-[350px] w-full items-center justify-center">
-            <span className="text-gray-500">
-              Nenhum jogador na lista do Racha.
-            </span>
+          <div className="flex h-[350px] w-full flex-col items-center justify-center space-y-2 text-gray-500">
+            <OctagonX className="h-8 w-8" />
+            <span>Nenhum jogador na lista do racha.</span>
           </div>
         )}
         <DialogFooter
