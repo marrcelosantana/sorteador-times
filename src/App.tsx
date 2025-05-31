@@ -8,6 +8,12 @@ function App() {
       <PlayersProvider>
         <Home />
       </PlayersProvider>
+      {/* <div className="py-4 text-center">
+        <span className="text-muted-foreground text-xs">
+          Criado por Marcelo Santana
+        </span>
+        <Copyright className="text-muted-foreground ml-1 inline h-4 w-4" />
+      </div> */}
     </ThemeProvider>
   );
 }
