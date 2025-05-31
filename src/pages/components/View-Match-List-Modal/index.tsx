@@ -13,7 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 
-const ViewMatchModal: React.FC = () => {
+const ViewMatchListModal: React.FC = () => {
   const { matchList, addOrRemoveFromMatchList, clearMatchList } = usePlayers();
 
   return (
@@ -81,4 +81,4 @@ const ViewMatchModal: React.FC = () => {
   );
 };
 
-export default ViewMatchModal;
+export default ViewMatchListModal;

@@ -3,7 +3,7 @@ import Pagination from "./Pagination";
 import PlayersTable from "./Players-Table";
 import InfoCard from "./Info-Card";
 import NewDrawModal from "./New-Draw-Modal";
-import ViewMatchModal from "./View-Match-Modal";
+import ViewMatchListModal from "./View-Match-List-Modal";
 
 export {
   Header,
@@ -11,5 +11,5 @@ export {
   PlayersTable,
   InfoCard,
   NewDrawModal,
-  ViewMatchModal,
+  ViewMatchListModal,
 };

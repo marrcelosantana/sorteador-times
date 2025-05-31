@@ -15,7 +15,7 @@ const Header: React.FC = () => {
       <div className="flex items-center justify-center gap-4">
         <Trophy className="h-6 w-6" />
         <Separator orientation="vertical" className="!h-6" />
-        <span className="text-xl">Sorteador de times</span>
+        <span className="text-xl">Forme seu racha</span>
       </div>
       <div className="flex items-center justify-center gap-2">
         <Dialog open={modalOpen} onOpenChange={setModalOpen}>

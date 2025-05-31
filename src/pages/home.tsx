@@ -13,7 +13,7 @@ import {
   InfoCard,
   Pagination,
   PlayersTable,
-  ViewMatchModal,
+  ViewMatchListModal,
 } from "./components";
 
 const Home: React.FC = () => {
@@ -68,7 +68,7 @@ const Home: React.FC = () => {
                 )}
               </Button>
             </DialogTrigger>
-            <ViewMatchModal />
+            <ViewMatchListModal />
           </Dialog>
         </div>
         {players.length > 0 ? (

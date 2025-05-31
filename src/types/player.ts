@@ -4,3 +4,9 @@ export type Player = {
   score: number;
   position?: "ATA" | "MEI" | "DEF";
 };
+
+export type PayloadType = {
+  numberOfTeams: number;
+  numberOfPlayers: number;
+  matchList: Player[];
+};
