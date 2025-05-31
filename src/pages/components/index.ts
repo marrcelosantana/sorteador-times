@@ -4,6 +4,7 @@ import PlayersTable from "./Players-Table";
 import InfoCard from "./Info-Card";
 import NewDrawModal from "./New-Draw-Modal";
 import ViewMatchListModal from "./View-Match-List-Modal";
+import MatchModal from "./Match-Modal";
 
 export {
   Header,
@@ -12,4 +13,5 @@ export {
   InfoCard,
   NewDrawModal,
   ViewMatchListModal,
+  MatchModal,
 };

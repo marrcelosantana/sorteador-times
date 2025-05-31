@@ -3,7 +3,7 @@ import React from "react";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { PlusCircle } from "lucide-react";
+import { MinusCircle, PlusCircle } from "lucide-react";
 import { usePlayers } from "@/hooks/usePlayers";
 
 import {
@@ -57,11 +57,19 @@ const PlayersTable: React.FC<PlayersTableProps> = ({ data }) => {
                   isPlayerInMatchList(player) ? "destructive" : "secondary"
                 }
                 onClick={() => addOrRemoveFromMatchList(player)}
+                className="flex items-center gap-2"
               >
-                {isPlayerInMatchList(player)
-                  ? "Remover do Racha"
-                  : "Adicionar ao Racha"}
-                <PlusCircle />
+                {isPlayerInMatchList(player) ? (
+                  <>
+                    <span className="hidden sm:inline">Remover do Racha</span>
+                    <MinusCircle className="h-4 w-4 md:ml-1" />
+                  </>
+                ) : (
+                  <>
+                    <span className="hidden sm:inline">Adicionar ao Racha</span>
+                    <PlusCircle className="h-4 w-4" />
+                  </>
+                )}
               </Button>
             </TableCell>
             <TableCell className="w-0"></TableCell>

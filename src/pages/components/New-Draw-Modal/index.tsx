@@ -4,7 +4,12 @@ import { useEffect, useState } from "react";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { checkRules, sortBalancedTeams } from "@/utils/functions";
+
+import {
+  checkRules,
+  sortBalancedTeams,
+  type TeamResult,
+} from "@/utils/functions";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,7 +26,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+
 import ViewMatchListModal from "../View-Match-List-Modal";
+import MatchModal from "../Match-Modal";
 
 type NewDrawModalProps = {
   isModalOpen: boolean;
@@ -37,8 +44,11 @@ type FormDataType = z.infer<typeof schema>;
 
 const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
   const { matchList } = usePlayers();
+
   const [viewMatchModalOpen, setViewMatchModalOpen] = useState(false);
+  const [matchModalOpen, setMatchModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [teams, setTeams] = useState<TeamResult[]>([]);
 
   const {
     register,
@@ -62,6 +72,7 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
     };
 
     if (!checkRules(payload)) {
+      setIsLoading(false);
       return;
     }
 
@@ -71,9 +82,11 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
       payload.numberOfPlayers,
     );
 
+    setTeams(teams);
+
     setTimeout(() => {
-      console.log("Sorteio realizado com sucesso!", teams);
       toast.success("Sorteio realizado com sucesso!");
+      setMatchModalOpen(true);
       setIsLoading(false);
     }, 1000);
   }
@@ -157,6 +170,10 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
           </Button>
         </DialogFooter>
       </form>
+
+      <Dialog open={matchModalOpen} onOpenChange={setMatchModalOpen}>
+        <MatchModal teams={teams} />
+      </Dialog>
     </DialogContent>
   );
 };

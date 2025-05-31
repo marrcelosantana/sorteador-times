@@ -36,7 +36,7 @@ function checkRules(payload: PayloadType): boolean {
   return true;
 }
 
-type TeamResult = {
+export type TeamResult = {
   players: Player[];
   average: number;
 };

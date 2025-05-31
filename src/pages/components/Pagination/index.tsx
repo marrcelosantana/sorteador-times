@@ -4,6 +4,7 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  Copyright,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -32,10 +33,18 @@ const Pagination: React.FC<PaginationProps> = ({
           {totalCount > 0 && totalCount < 2 ? "jogador" : "jogadores"}
         </span>
       </div>
+
+      <div className="py-4 text-center">
+        <span className="text-muted-foreground text-xs">
+          Criado por Marcelo Santana
+        </span>
+        <Copyright className="text-muted-foreground ml-1 inline h-4 w-4" />
+      </div>
       <div className="flex items-center gap-6 lg:gap-8">
         <div className="text-sm font-medium">
           Pag {pageIndex + 1} de {pages}
         </div>
+
         <div className="flex items-center gap-2">
           <Button
             variant="outline"
