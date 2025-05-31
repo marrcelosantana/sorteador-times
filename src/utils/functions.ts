@@ -59,11 +59,8 @@ function sortBalancedTeams(
     throw new Error("Jogadores insuficientes para formar os times.");
   }
 
-  // Embaralha os jogadores antes de balancear
+  // Embaralha os jogadores para garantir sorteio diferente a cada chamada
   const shuffledPlayers = shuffleArray(players);
-
-  // Ordena os jogadores por score decrescente
-  const sortedPlayers = [...shuffledPlayers].sort((a, b) => b.score - a.score);
 
   // Inicializa os times
   const teams: TeamResult[] = Array.from({ length: numberOfTeams }, () => ({
@@ -71,13 +68,11 @@ function sortBalancedTeams(
     average: 0,
   }));
 
-  // Distribuição balanceada: snake draft
+  // Distribuição snake draft com lista embaralhada
   let direction = 1;
   let teamIndex = 0;
-
   for (let i = 0; i < numberOfTeams * numberOfPlayers; i++) {
-    teams[teamIndex].players.push(sortedPlayers[i]);
-    // Avança para o próximo time
+    teams[teamIndex].players.push(shuffledPlayers[i]);
     if (
       (direction === 1 && teamIndex === numberOfTeams - 1) ||
       (direction === -1 && teamIndex === 0)

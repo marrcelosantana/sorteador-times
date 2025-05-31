@@ -71,7 +71,7 @@ const ViewMatchListModal: React.FC = () => {
             </Button>
           )}
           <DialogClose asChild>
-            <Button variant="default" type="button">
+            <Button variant="default" type="button" className="text-white">
               Fechar
             </Button>
           </DialogClose>

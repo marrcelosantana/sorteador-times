@@ -62,7 +62,7 @@ const Home: React.FC = () => {
                 <List />
                 Visualizar lista do racha
                 {matchList.length > 0 && (
-                  <span className="flex items-center justify-center rounded-xl bg-[#fb2c36] px-2 text-white">
+                  <span className="bg-primary dark:bg-primary-foreground flex items-center justify-center rounded-xl px-2 text-white">
                     {matchList.length}
                   </span>
                 )}

@@ -83,7 +83,7 @@ const MatchModal: React.FC<MatchModalProps> = ({ teams }) => {
           Copiar lista
         </Button>
         <DialogClose asChild>
-          <Button variant="default" type="button">
+          <Button variant="default" type="button" className="text-white">
             Fechar
           </Button>
         </DialogClose>

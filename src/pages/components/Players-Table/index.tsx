@@ -53,9 +53,7 @@ const PlayersTable: React.FC<PlayersTableProps> = ({ data }) => {
             </TableCell>
             <TableCell className="max-w-[120px]">
               <Button
-                variant={
-                  isPlayerInMatchList(player) ? "destructive" : "secondary"
-                }
+                variant={isPlayerInMatchList(player) ? "secondary" : "outline"}
                 onClick={() => addOrRemoveFromMatchList(player)}
                 className="flex items-center gap-2"
               >
