@@ -34,7 +34,7 @@ const Pagination: React.FC<PaginationProps> = ({
         </span>
       </div>
 
-      <div className="py-4 text-center">
+      <div className="hidden py-4 text-center sm:inline">
         <span className="text-muted-foreground text-xs">
           Criado por Marcelo Santana
         </span>
