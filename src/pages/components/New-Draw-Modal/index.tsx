@@ -1,15 +1,20 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 import {
+  Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
+
+import ViewMatchModal from "../View-Match-Modal";
 
 type NewDrawModalProps = {
   isModalOpen: boolean;
@@ -17,6 +22,8 @@ type NewDrawModalProps = {
 };
 
 const NewDrawModal: React.FC<NewDrawModalProps> = () => {
+  const [viewMatchModalOpen, setViewMatchModalOpen] = useState(false);
+
   return (
     <DialogContent>
       <DialogHeader className="mb-2">
@@ -52,11 +59,19 @@ const NewDrawModal: React.FC<NewDrawModalProps> = () => {
           <Label htmlFor="number-of-teams" className="text-sm">
             Lista do Racha
           </Label>
-          <Button variant="secondary" type="button">
-            <span className="text-sm">Confirme a lista do Racha</span>
-          </Button>
-        </div>
 
+          <Dialog
+            open={viewMatchModalOpen}
+            onOpenChange={setViewMatchModalOpen}
+          >
+            <DialogTrigger asChild>
+              <Button variant="secondary" type="button">
+                <span className="text-sm">Confirme a lista do Racha</span>
+              </Button>
+            </DialogTrigger>
+            <ViewMatchModal />
+          </Dialog>
+        </div>
         <DialogFooter className="mt-3 gap-4 sm:gap-1">
           <DialogClose asChild>
             <Button variant="outline" type="button">

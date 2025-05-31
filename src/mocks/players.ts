@@ -36,7 +36,7 @@ const playersMock: Player[] = [
   { id: "q9r0", name: "Roberto Julio", score: 3.65, position: "DEF" },
   { id: "s1t2", name: "Vinicius Cabral", score: 4.8, position: "ATA" },
   { id: "u3v4", name: "Henrique Soares", score: 3.1, position: "DEF" },
-  { id: "w5x6", name: "Israel Freitas", score: 4.2, position: "ATA" },
+  { id: "w5x6", name: "Israel Freitas (Negão)", score: 4.2, position: "ATA" },
   { id: "y7z8", name: "Pablu Ribeiro", score: 3.8, position: "MEI" },
   { id: "a9b0", name: "Lorhan Dejan", score: 3.3, position: "MEI" },
   { id: "s0p9", name: "Afonso Neto", score: 3.0, position: "MEI" },
@@ -63,7 +63,7 @@ const playersMock: Player[] = [
   { id: "s3t4", name: "Breno A.", score: 3.6, position: "MEI" },
   {
     id: "m3n4",
-    name: "Mateus Felipe - Ex Goleiro",
+    name: "Mateus Felipe (Ex Goleiro)",
     score: 1.3,
     position: "DEF",
   },

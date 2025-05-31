@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import type { Player } from "@/types/player";
 import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
@@ -12,22 +12,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { usePlayers } from "@/hooks/usePlayers";
 
 interface PlayersTableProps {
   data: Player[];
 }
 
 const PlayersTable: React.FC<PlayersTableProps> = ({ data }) => {
+  const { addOrRemoveFromMatchList, isPlayerInMatchList } = usePlayers();
+
   return (
     <Table className="w-full border-y-2 border-r-2">
       <TableHeader>
         <TableRow>
           <TableHead></TableHead>
           <TableHead>Nome</TableHead>
-          <TableHead>Posição</TableHead>
           <TableHead>Nota</TableHead>
-          <TableHead></TableHead>
-          <TableHead></TableHead>
+          <TableHead>Posição</TableHead>
           <TableHead>Ações</TableHead>
         </TableRow>
       </TableHeader>
@@ -35,11 +36,8 @@ const PlayersTable: React.FC<PlayersTableProps> = ({ data }) => {
         {data?.map((player: Player) => (
           <TableRow key={player.id}>
             <TableCell></TableCell>
-            <TableCell className="max-w-[220px] truncate font-medium">
+            <TableCell className="!w-[70vw] truncate font-medium">
               {player.name}
-            </TableCell>
-            <TableCell className="max-w-[120px] truncate font-mono text-xs font-medium">
-              {player.position}
             </TableCell>
             <TableCell
               className={cn("max-w-[120px] truncate font-medium", {
@@ -49,11 +47,19 @@ const PlayersTable: React.FC<PlayersTableProps> = ({ data }) => {
             >
               {player.score}
             </TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
+            <TableCell className="max-w-[120px] truncate font-mono text-xs font-medium">
+              {player.position}
+            </TableCell>
             <TableCell className="max-w-[120px]">
-              <Button variant="secondary">
-                Adicionar à lista
+              <Button
+                variant={
+                  isPlayerInMatchList(player) ? "destructive" : "secondary"
+                }
+                onClick={() => addOrRemoveFromMatchList(player)}
+              >
+                {isPlayerInMatchList(player)
+                  ? "Remover do Racha"
+                  : "Adicionar ao Racha"}
                 <PlusCircle />
               </Button>
             </TableCell>

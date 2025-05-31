@@ -5,16 +5,28 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { getPlayersPage, playersMock } from "@/mocks/players";
-import { Header, InfoCard, Pagination, PlayersTable } from "./components";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { usePlayers } from "@/hooks/usePlayers";
+
+import {
+  Header,
+  InfoCard,
+  Pagination,
+  PlayersTable,
+  ViewMatchModal,
+} from "./components";
 
 const Home: React.FC = () => {
+  const { matchList } = usePlayers();
+
   const [page, setPage] = useState(1);
   const [limit] = useState(7);
   const [search, setSearch] = useState("");
 
+  const [viewMatchModalOpen, setViewMatchModalOpen] = useState(false);
+
   const aboveAverage = playersMock.filter((player) => player.score >= 3).length;
   const belowAverage = playersMock.filter((player) => player.score < 3).length;
-  const matchList = ["1", "2"];
 
   const players: Player[] = getPlayersPage(page, limit, search);
 
@@ -41,16 +53,23 @@ const Home: React.FC = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-
-          <Button variant="outline">
-            <List />
-            Visualizar lista do Racha
-            {matchList.length > 0 && (
-              <span className="flex items-center justify-center rounded-xl bg-[#8e54ff] px-2 text-white">
-                {matchList.length}
-              </span>
-            )}
-          </Button>
+          <Dialog
+            open={viewMatchModalOpen}
+            onOpenChange={setViewMatchModalOpen}
+          >
+            <DialogTrigger asChild>
+              <Button variant="outline">
+                <List />
+                Visualizar lista do Racha
+                {matchList.length > 0 && (
+                  <span className="flex items-center justify-center rounded-xl bg-[#fb2c36] px-2 text-white">
+                    {matchList.length}
+                  </span>
+                )}
+              </Button>
+            </DialogTrigger>
+            <ViewMatchModal />
+          </Dialog>
         </div>
         {players.length > 0 ? (
           <div className="mt-4">
