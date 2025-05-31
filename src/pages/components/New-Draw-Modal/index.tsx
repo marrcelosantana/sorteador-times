@@ -29,6 +29,7 @@ import {
 
 import ViewMatchListModal from "../View-Match-List-Modal";
 import MatchModal from "../Match-Modal";
+import { Search } from "lucide-react";
 
 type NewDrawModalProps = {
   isModalOpen: boolean;
@@ -36,8 +37,8 @@ type NewDrawModalProps = {
 };
 
 const schema = z.object({
-  numberOfTeams: z.string().min(1, "Campo obrigatório."),
-  numberOfPlayers: z.string().min(1, "Campo obrigatório."),
+  numberOfTeams: z.number().min(1, "Campo obrigatório."),
+  numberOfPlayers: z.number().min(1, "Campo obrigatório."),
 });
 
 type FormDataType = z.infer<typeof schema>;
@@ -51,10 +52,10 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
   const [teams, setTeams] = useState<TeamResult[]>([]);
 
   const {
-    register,
     handleSubmit,
     reset,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<FormDataType>({
     resolver: zodResolver(schema),
@@ -66,8 +67,8 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
     setIsLoading(true);
 
     const payload = {
-      numberOfTeams: Number(data.numberOfTeams),
-      numberOfPlayers: Number(data.numberOfPlayers),
+      numberOfTeams: data.numberOfTeams,
+      numberOfPlayers: data.numberOfPlayers,
       matchList: matchList,
     };
 
@@ -113,7 +114,9 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
             id="number-of-teams"
             type="number"
             placeholder="Clique para preencher..."
-            {...register("numberOfTeams")}
+            onChange={(e) => {
+              setValue("numberOfTeams", Number(e.target.value));
+            }}
             value={values.numberOfTeams}
           />
           <span className="text-xs text-red-500">
@@ -129,7 +132,9 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
             id="number-of-players"
             type="number"
             placeholder="Clique para preencher..."
-            {...register("numberOfPlayers")}
+            onChange={(e) => {
+              setValue("numberOfPlayers", Number(e.target.value));
+            }}
             value={values.numberOfPlayers}
           />
           <span className="text-xs text-red-500">
@@ -147,14 +152,15 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
             onOpenChange={setViewMatchModalOpen}
           >
             <DialogTrigger asChild>
-              <Button variant="secondary" type="button">
+              <Button variant="secondary" type="button" className="w-[220px]">
+                <Search className="h-4 w-4" />
                 <span className="text-sm">Confira a lista do Racha</span>
               </Button>
             </DialogTrigger>
             <ViewMatchListModal />
           </Dialog>
         </div>
-        <DialogFooter className="mt-3 gap-4 sm:gap-1">
+        <DialogFooter className="mt-3 gap-4 sm:flex sm:items-center sm:gap-1">
           <DialogClose asChild>
             <Button variant="outline" type="button">
               Cancelar
@@ -163,7 +169,7 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
           <Button
             variant="default"
             type="submit"
-            className="ml-2 text-white"
+            className="text-white md:ml-2"
             disabled={isLoading}
           >
             {isLoading ? "Sorteando..." : "Sortear times"}

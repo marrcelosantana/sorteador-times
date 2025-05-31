@@ -5,7 +5,6 @@ import { usePlayers } from "@/hooks/usePlayers";
 import { BrushCleaning, OctagonX, Trash2 } from "lucide-react";
 
 import {
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -26,7 +25,7 @@ const ViewMatchListModal: React.FC = () => {
       </DialogHeader>
       <div className="!-mt-[32px] w-full">
         {matchList.length ? (
-          <ScrollArea className="flex h-[300px] w-full rounded-md border p-4">
+          <ScrollArea className="flex h-[250px] w-full rounded-md border p-4 sm:h-[300px]">
             {matchList.map((player, idx) => (
               <div key={idx} className="mb-2 flex w-full gap-2 text-sm">
                 <div className="flex w-full gap-2">
@@ -44,7 +43,7 @@ const ViewMatchListModal: React.FC = () => {
                   </span>
                 </div>
                 <button
-                  className="cursor-pointer text-red-500 hover:text-red-600"
+                  className="cursor-pointer text-red-400 hover:text-red-500"
                   onClick={() => addOrRemoveFromMatchList(player)}
                   aria-label="Remover jogador"
                 >
@@ -60,9 +59,9 @@ const ViewMatchListModal: React.FC = () => {
           </div>
         )}
         <DialogFooter
-          className={cn("mt-5 flex w-full items-center gap-4 sm:gap-1", {
-            "!justify-between": matchList.length > 0,
-          })}
+          className={
+            "mt-5 flex w-full items-center !justify-start gap-4 sm:gap-1"
+          }
         >
           {matchList.length > 0 && (
             <Button variant="outline" type="button" onClick={clearMatchList}>
@@ -70,11 +69,11 @@ const ViewMatchListModal: React.FC = () => {
               Limpar lista
             </Button>
           )}
-          <DialogClose asChild>
+          {/* <DialogClose asChild>
             <Button variant="default" type="button" className="text-white">
               Fechar
             </Button>
-          </DialogClose>
+          </DialogClose> */}
         </DialogFooter>
       </div>
     </DialogContent>
