@@ -3,7 +3,6 @@ import { cn } from "@/lib/utils";
 import type { TeamResult } from "@/utils/functions";
 
 import {
-  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
