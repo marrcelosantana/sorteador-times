@@ -1,13 +1,13 @@
 import type { Player } from "@/types/player";
 
 const playersMock: Player[] = [
-  { id: "e1f2", name: "Marcelo Santana", score: 4.2, position: "MEI" },
+  { id: "e1f2", name: "Marcelo Santana", score: 4.25, position: "MEI" },
   { id: "a1b2", name: "Davi Silva", score: 1.5, position: "ATA" },
   { id: "c3d4", name: "Lucas Barbosa", score: 4.2, position: "MEI" },
   { id: "o7p8", name: "Pedro Victor (PV)", score: 5.0, position: "MEI" },
   { id: "g7h8", name: "Dhonatas Sousa (Capota)", score: 2.1, position: "MEI" },
   { id: "i9j0", name: "Sergio Filho", score: 4.4, position: "DEF" },
-  { id: "k1l2", name: "Assis Felix", score: 2.6, position: "ATA" },
+  { id: "k1l2", name: "Assis Felix", score: 3.2, position: "ATA" },
   { id: "a7b8", name: "Manoel Hudson (Manel)", score: 4.6, position: "ATA" },
   { id: "w3x4", name: "Pedro Olimpio", score: 2.1, position: "MEI" },
   { id: "e5f6", name: "Gledson Junior", score: 4.6, position: "DEF" },
@@ -43,9 +43,9 @@ const playersMock: Player[] = [
   { id: "c1d2", name: "Marcos Vinicius", score: 2.43, position: "DEF" },
   { id: "e3f4", name: "Paulo Hemeson (Messin)", score: 4.0, position: "MEI" },
   { id: "g5h6", name: "Romulo Cabral (Romim)", score: 2.6, position: "DEF" },
-  { id: "i7j8", name: "Luan Barber", score: 3.8, position: "MEI" },
-  { id: "k9l0", name: "John Barber", score: 3.8, position: "MEI" },
-  { id: "m1n2", name: "Falcao Filho", score: 4.6, position: "MEI" },
+  { id: "i7j8", name: "Luan Barber", score: 4.1, position: "MEI" },
+  { id: "k9l0", name: "John Barber", score: 4.1, position: "MEI" },
+  { id: "m1n2", name: "Falcao Filho", score: 4.8, position: "MEI" },
   { id: "o3p4", name: "Avelino Facó", score: 4.8, position: "MEI" },
   { id: "q5r6", name: "Gustavo Araujo", score: 3.3, position: "ATA" },
   { id: "s7t8", name: "Uesley Guerra", score: 4.3, position: "MEI" },

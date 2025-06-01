@@ -74,11 +74,6 @@ const ViewMatchListModal: React.FC = () => {
               Limpar lista
             </Button>
           )}
-          {/* <DialogClose asChild>
-            <Button variant="default" type="button" className="text-white">
-              Fechar
-            </Button>
-          </DialogClose> */}
         </DialogFooter>
       </div>
     </DialogContent>

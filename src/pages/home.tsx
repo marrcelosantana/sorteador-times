@@ -9,6 +9,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { usePlayers } from "@/hooks/usePlayers";
 
 import {
+  AverageModal,
   Header,
   InfoCard,
   Pagination,
@@ -24,6 +25,8 @@ const Home: React.FC = () => {
   const [search, setSearch] = useState("");
 
   const [viewMatchModalOpen, setViewMatchModalOpen] = useState(false);
+  const [aboveModalOpen, setAboveModalOpen] = useState(false);
+  const [belowModalOpen, setAverageModalOpen] = useState(false);
 
   const aboveAverage = playersMock.filter((player) => player.score >= 3).length;
   const belowAverage = playersMock.filter((player) => player.score < 3).length;
@@ -45,8 +48,23 @@ const Home: React.FC = () => {
           <div className="flex flex-col gap-4">
             <div className="flex flex-col items-center justify-center gap-6 lg:flex-row">
               <InfoCard type="total" data={playersMock.length} />
-              <InfoCard type="above-average" data={aboveAverage} />
-              <InfoCard type="below-average" data={belowAverage} />
+              <Dialog open={aboveModalOpen} onOpenChange={setAboveModalOpen}>
+                <DialogTrigger asChild>
+                  <span className="cursor-pointer">
+                    <InfoCard type="above-average" data={aboveAverage} />
+                  </span>
+                </DialogTrigger>
+                <AverageModal type="above-average" />
+              </Dialog>
+
+              <Dialog open={belowModalOpen} onOpenChange={setAverageModalOpen}>
+                <DialogTrigger asChild>
+                  <span className="cursor-pointer">
+                    <InfoCard type="below-average" data={belowAverage} />
+                  </span>
+                </DialogTrigger>
+                <AverageModal type="below-average" />
+              </Dialog>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import InfoCard from "./Info-Card";
 import NewDrawModal from "./New-Draw-Modal";
 import ViewMatchListModal from "./View-Match-List-Modal";
 import MatchModal from "./Match-Modal";
+import AverageModal from "./Average-Modal";
 
 export {
   Header,
@@ -14,4 +15,5 @@ export {
   NewDrawModal,
   ViewMatchListModal,
   MatchModal,
+  AverageModal,
 };
