@@ -44,7 +44,9 @@ export type TeamResult = {
 function shuffleArray<T>(array: T[]): T[] {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(
+      (crypto.getRandomValues(new Uint32Array(1))[0] / 2 ** 32) * (i + 1),
+    );
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr;
@@ -55,28 +57,38 @@ function sortBalancedTeams(
   numberOfTeams: number,
   numberOfPlayers: number,
 ): TeamResult[] {
-  if (players.length < numberOfTeams * numberOfPlayers) {
+  const totalNeeded = numberOfTeams * numberOfPlayers;
+  if (players.length < totalNeeded) {
     throw new Error("Jogadores insuficientes para formar os times.");
   }
 
-  // Embaralha os jogadores para garantir aleatoriedade real
-  const shuffledPlayers = shuffleArray(players);
+  // Embaralha primeiro para aleatoriedade geral
+  const shuffled = shuffleArray(players);
 
-  // Inicializa os times
+  // Ordena por score, mas com aleatoriedade leve (score + random noise)
+  const randomizedSortedPlayers = [...shuffled]
+    .sort(
+      (a, b) => b.score + Math.random() * 0.3 - (a.score + Math.random() * 0.3),
+    )
+    .slice(0, totalNeeded);
+
   const teams: TeamResult[] = Array.from({ length: numberOfTeams }, () => ({
     players: [],
     average: 0,
   }));
 
-  // Distribui cada jogador embaralhado para o time com menor média atual
-  for (const player of shuffledPlayers.slice(
-    0,
-    numberOfTeams * numberOfPlayers,
-  )) {
-    teams
-      .sort(
-        (a, b) => a.players.length - b.players.length || a.average - b.average,
-      )[0]
+  for (const player of randomizedSortedPlayers) {
+    // Acha o time mais "leve" com espaço
+    const eligibleTeams = teams.filter(
+      (team) => team.players.length < numberOfPlayers,
+    );
+
+    eligibleTeams
+      .sort((a, b) => {
+        const totalA = a.players.reduce((sum, p) => sum + p.score, 0);
+        const totalB = b.players.reduce((sum, p) => sum + p.score, 0);
+        return totalA - totalB;
+      })[0]
       .players.push(player);
 
     // Atualiza médias
