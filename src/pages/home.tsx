@@ -3,7 +3,7 @@ import type { Player } from "@/types/player";
 import { List } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getPlayersPage, playersMock } from "@/mocks/players";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { usePlayers } from "@/hooks/usePlayers";
@@ -29,6 +29,10 @@ const Home: React.FC = () => {
   const belowAverage = playersMock.filter((player) => player.score < 3).length;
 
   const players: Player[] = getPlayersPage(page, limit, search);
+
+  useEffect(() => {
+    setPage(1);
+  }, [search]);
 
   return (
     <div className="h-screen w-full">
