@@ -28,8 +28,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import ViewMatchListModal from "../view-match-list-modal";
-import MatchModal from "../match-modal";
+import ViewMatchListModal from "../View-Match-List-Modal";
+import MatchModal from "../Match-Modal";
 
 type NewDrawModalProps = {
   isModalOpen: boolean;

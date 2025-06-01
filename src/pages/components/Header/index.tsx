@@ -5,7 +5,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
 import { CalendarPlus, Trophy } from "lucide-react";
 
-import NewDrawModal from "../new-draw-modal";
+import NewDrawModal from "../New-Draw-Modal";
 
 const Header: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
