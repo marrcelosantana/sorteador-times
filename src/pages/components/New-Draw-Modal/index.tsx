@@ -3,7 +3,7 @@ import { usePlayers } from "@/hooks/usePlayers";
 import { useEffect, useState } from "react";
 
 import { z } from "zod";
-import { Search } from "lucide-react";
+import { LoaderIcon, Search } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -28,8 +28,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import ViewMatchListModal from "../View-Match-List-Modal";
-import MatchModal from "../Match-Modal";
+import ViewMatchListModal from "../view-match-list-modal";
+import MatchModal from "../match-modal";
 
 type NewDrawModalProps = {
   isModalOpen: boolean;
@@ -42,6 +42,10 @@ const schema = z.object({
 });
 
 type FormDataType = z.infer<typeof schema>;
+
+function Loader() {
+  return <LoaderIcon className="h-4 w-4 animate-spin" />;
+}
 
 const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
   const { matchList } = usePlayers();
@@ -172,7 +176,10 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
             className="text-white md:ml-2"
             disabled={isLoading}
           >
-            {isLoading ? "Sorteando..." : "Sortear times"}
+            <>
+              Sortear times
+              {isLoading && <Loader />}
+            </>
           </Button>
         </DialogFooter>
       </form>

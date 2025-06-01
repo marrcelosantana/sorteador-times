@@ -3,9 +3,9 @@ import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Separator } from "@/components/ui/separator";
-import { Plus, Trophy } from "lucide-react";
+import { CalendarPlus, Trophy } from "lucide-react";
 
-import NewDrawModal from "../New-Draw-Modal";
+import NewDrawModal from "../new-draw-modal";
 
 const Header: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
           <DialogTrigger asChild>
             <Button className="flex h-12 items-center justify-center gap-2 text-white">
               <span>Novo sorteio</span>
-              <Plus className="h-4 w-4" />
+              <CalendarPlus className="h-4 w-4" />
             </Button>
           </DialogTrigger>
           <NewDrawModal isModalOpen={modalOpen} setModalOpen={setModalOpen} />

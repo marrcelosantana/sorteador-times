@@ -1,10 +1,10 @@
-import Header from "./Header";
-import Pagination from "./Pagination";
-import PlayersTable from "./Players-Table";
-import InfoCard from "./Info-Card";
-import NewDrawModal from "./New-Draw-Modal";
-import ViewMatchListModal from "./View-Match-List-Modal";
-import MatchModal from "./Match-Modal";
+import Header from "./header";
+import Pagination from "./pagination";
+import PlayersTable from "./players-table";
+import InfoCard from "./info-card";
+import NewDrawModal from "./new-draw-modal";
+import ViewMatchListModal from "./view-match-list-modal";
+import MatchModal from "./match-modal";
 
 export {
   Header,
