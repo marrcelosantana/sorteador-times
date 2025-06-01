@@ -15,12 +15,17 @@ import {
 const ViewMatchListModal: React.FC = () => {
   const { matchList, addOrRemoveFromMatchList, clearMatchList } = usePlayers();
 
+  const matchListAverage =
+    matchList.reduce((acc, player) => acc + player.score, 0) /
+    (matchList.length || 1);
+
   return (
     <DialogContent className="h-[500px]">
       <DialogHeader>
         <DialogTitle className="text-2xl">Lista do racha</DialogTitle>
         <DialogDescription>
-          Esses são os jogadores que estão na lista do racha.
+          Jogadores que estão na lista do racha - Média:{" "}
+          {matchListAverage.toFixed(2)}
         </DialogDescription>
       </DialogHeader>
       <div className="!-mt-[32px] w-full">

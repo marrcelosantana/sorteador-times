@@ -59,7 +59,7 @@ function sortBalancedTeams(
     throw new Error("Jogadores insuficientes para formar os times.");
   }
 
-  // Embaralha os jogadores para garantir sorteio diferente a cada chamada
+  // Embaralha os jogadores para garantir aleatoriedade real
   const shuffledPlayers = shuffleArray(players);
 
   // Inicializa os times
@@ -68,25 +68,24 @@ function sortBalancedTeams(
     average: 0,
   }));
 
-  // Distribuição snake draft com lista embaralhada
-  let direction = 1;
-  let teamIndex = 0;
-  for (let i = 0; i < numberOfTeams * numberOfPlayers; i++) {
-    teams[teamIndex].players.push(shuffledPlayers[i]);
-    if (
-      (direction === 1 && teamIndex === numberOfTeams - 1) ||
-      (direction === -1 && teamIndex === 0)
-    ) {
-      direction *= -1;
-    } else {
-      teamIndex += direction;
-    }
-  }
+  // Distribui cada jogador embaralhado para o time com menor média atual
+  for (const player of shuffledPlayers.slice(
+    0,
+    numberOfTeams * numberOfPlayers,
+  )) {
+    teams
+      .sort(
+        (a, b) => a.players.length - b.players.length || a.average - b.average,
+      )[0]
+      .players.push(player);
 
-  // Calcula a média de cada time
-  for (const team of teams) {
-    const total = team.players.reduce((sum, p) => sum + p.score, 0);
-    team.average = Number((total / team.players.length).toFixed(2));
+    // Atualiza médias
+    for (const team of teams) {
+      const total = team.players.reduce((sum, p) => sum + p.score, 0);
+      team.average = team.players.length
+        ? Number((total / team.players.length).toFixed(2))
+        : 0;
+    }
   }
 
   return teams;
