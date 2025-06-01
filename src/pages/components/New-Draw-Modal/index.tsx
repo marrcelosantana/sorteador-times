@@ -3,6 +3,7 @@ import { usePlayers } from "@/hooks/usePlayers";
 import { useEffect, useState } from "react";
 
 import { z } from "zod";
+import { Search } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -29,7 +30,6 @@ import {
 
 import ViewMatchListModal from "../View-Match-List-Modal";
 import MatchModal from "../Match-Modal";
-import { Search } from "lucide-react";
 
 type NewDrawModalProps = {
   isModalOpen: boolean;

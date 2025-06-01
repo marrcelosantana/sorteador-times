@@ -15,13 +15,13 @@ const Header: React.FC = () => {
       <div className="flex items-center justify-center gap-4">
         <Trophy className="h-6 w-6" />
         <Separator orientation="vertical" className="!h-6" />
-        <span className="text-xl">Forme seu racha</span>
+        <span className="hidden text-xl sm:inline">Forme seu racha</span>
       </div>
       <div className="flex items-center justify-center gap-2">
         <Dialog open={modalOpen} onOpenChange={setModalOpen}>
           <DialogTrigger asChild>
             <Button className="flex h-12 items-center justify-center gap-2 text-white">
-              <span className="hidden sm:inline">Novo sorteio</span>
+              <span>Novo sorteio</span>
               <Plus className="h-4 w-4" />
             </Button>
           </DialogTrigger>
