@@ -21,7 +21,7 @@ const Home: React.FC = () => {
   const { matchList } = usePlayers();
 
   const [page, setPage] = useState(1);
-  const [limit] = useState(7);
+  const [limit, setLimit] = useState(7);
   const [search, setSearch] = useState("");
 
   const [viewMatchModalOpen, setViewMatchModalOpen] = useState(false);
@@ -35,6 +35,11 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     setPage(1);
+    if (search.length > 0) {
+      setLimit(100);
+    } else {
+      setLimit(7);
+    }
   }, [search]);
 
   return (
