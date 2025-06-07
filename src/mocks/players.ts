@@ -59,8 +59,8 @@ const playersMock: Player[] = [
   { id: "k5l6", name: "Angelo Maciel", score: 0.5, position: "ATA" },
   { id: "m7n8", name: "Gabriel Braga", score: 2.8, position: "MEI" },
   { id: "o9p0", name: "Carlos Victor", score: 3.0, position: "DEF" },
-  { id: "q1r2", name: "Leodecio Segundo", score: 3.8, position: "MEI" },
-  { id: "s3t4", name: "Breno A.", score: 3.6, position: "MEI" },
+  { id: "q1r2", name: "Leodecio Segundo", score: 3.2, position: "MEI" },
+  { id: "s3t4", name: "Breno A.", score: 2.6, position: "MEI" },
   {
     id: "m3n4",
     name: "Mateus Felipe (Ex Goleiro)",
