@@ -65,10 +65,11 @@ function sortBalancedTeams(
   // Embaralha primeiro para aleatoriedade geral
   const shuffled = shuffleArray(players);
 
-  // Ordena por score, mas com aleatoriedade leve (score + random noise)
+  // Ordena por score, mas com ruído aleatório maior
   const randomizedSortedPlayers = [...shuffled]
     .sort(
-      (a, b) => b.score + Math.random() * 0.3 - (a.score + Math.random() * 0.3),
+      (a, b) =>
+        b.score + (Math.random() - 0.5) * 2 - (a.score + (Math.random() - 0.5) * 2),
     )
     .slice(0, totalNeeded);
 
@@ -77,27 +78,24 @@ function sortBalancedTeams(
     average: 0,
   }));
 
-  for (const player of randomizedSortedPlayers) {
-    // Acha o time mais "leve" com espaço
-    const eligibleTeams = teams.filter(
-      (team) => team.players.length < numberOfPlayers,
-    );
-
-    eligibleTeams
-      .sort((a, b) => {
-        const totalA = a.players.reduce((sum, p) => sum + p.score, 0);
-        const totalB = b.players.reduce((sum, p) => sum + p.score, 0);
-        return totalA - totalB;
-      })[0]
-      .players.push(player);
-
-    // Atualiza médias
-    for (const team of teams) {
-      const total = team.players.reduce((sum, p) => sum + p.score, 0);
-      team.average = team.players.length
-        ? Number((total / team.players.length).toFixed(2))
-        : 0;
+  // Distribuição rodada a rodada, sorteando a ordem dos times a cada rodada
+  for (let round = 0; round < numberOfPlayers; round++) {
+    // Sorteia a ordem dos times nesta rodada
+    const teamOrder = shuffleArray([...Array(numberOfTeams).keys()]);
+    for (const teamIdx of teamOrder) {
+      // Pega o próximo jogador disponível
+      const playerIdx = teams.reduce((acc, team) => acc + team.players.length, 0);
+      if (playerIdx >= randomizedSortedPlayers.length) break;
+      teams[teamIdx].players.push(randomizedSortedPlayers[playerIdx]);
     }
+  }
+
+  // Calcula médias
+  for (const team of teams) {
+    const total = team.players.reduce((sum, p) => sum + p.score, 0);
+    team.average = team.players.length
+      ? Number((total / team.players.length).toFixed(2))
+      : 0;
   }
 
   return teams;
