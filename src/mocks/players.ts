@@ -11,7 +11,7 @@ const playersMock: Player[] = [
   { id: "a7b8", name: "Manoel Hudson (Manel)", score: 4.6, position: "ATA" },
   { id: "w3x4", name: "Pedro Olimpio", score: 2.1, position: "MEI" },
   { id: "e5f6", name: "Gledson Junior", score: 4.6, position: "DEF" },
-  { id: "s9t0", name: "Rodrigo Saldanha", score: 3.9, position: "MEI" },
+  { id: "s9t0", name: "Rodrigo Saldanha", score: 4.2, position: "MEI" },
   { id: "u1v2", name: "Rodrigo Almeida", score: 1.5, position: "DEF" },
   { id: "y5z6", name: "Pedro Lyvio", score: 2.54, position: "DEF" },
   { id: "c9d0", name: "Pedro Henrique", score: 1.5, position: "DEF" },
