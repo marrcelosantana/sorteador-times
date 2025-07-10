@@ -52,6 +52,45 @@ function shuffleArray<T>(array: T[]): T[] {
   return arr;
 }
 
+function sortear1(
+  players: Player[],
+  numberOfTeams: number,
+  numberOfPlayers: number,
+): { difference: number; teams: Player[][] } {
+  // Cria array de índices e embaralha
+  const ordem = Array.from({ length: players.length }, (_, i) => i);
+  const shuffledOrdem = shuffleArray(ordem);
+
+  // Divide os índices em grupos para cada time
+  const idTimes: number[][] = [];
+  for (let i = 0; i < numberOfTeams; i++) {
+    idTimes.push(
+      shuffledOrdem.slice(i * numberOfPlayers, (i + 1) * numberOfPlayers),
+    );
+  }
+
+  // Cria os times baseado nos índices
+  const times: Player[][] = [];
+  for (let i = 0; i < numberOfTeams; i++) {
+    times.push([]);
+    for (const j of idTimes[i]) {
+      times[i].push(players[j]);
+    }
+  }
+
+  // Calcula médias
+  const medias = times.map(
+    (time) =>
+      time.reduce((sum, player) => sum + player.score, 0) / numberOfPlayers,
+  );
+
+  const maior = Math.max(...medias);
+  const menor = Math.min(...medias);
+  const difference = maior - menor;
+
+  return { difference, teams: times };
+}
+
 function sortBalancedTeams(
   players: Player[],
   numberOfTeams: number,
@@ -62,43 +101,37 @@ function sortBalancedTeams(
     throw new Error("Jogadores insuficientes para formar os times.");
   }
 
-  // Embaralha primeiro para aleatoriedade geral
-  const shuffled = shuffleArray(players);
+  // Pega apenas os jogadores necessários
+  const selectedPlayers = players.slice(0, totalNeeded);
 
-  // Ordena por score, mas com ruído aleatório maior
-  const randomizedSortedPlayers = [...shuffled]
-    .sort(
-      (a, b) =>
-        b.score + (Math.random() - 0.5) * 2 - (a.score + (Math.random() - 0.5) * 2),
-    )
-    .slice(0, totalNeeded);
+  const tentativas = 10000;
+  let menorDif = 1000;
+  let melhorTimes: Player[][] = [];
 
-  const teams: TeamResult[] = Array.from({ length: numberOfTeams }, () => ({
-    players: [],
-    average: 0,
-  }));
-
-  // Distribuição rodada a rodada, sorteando a ordem dos times a cada rodada
-  for (let round = 0; round < numberOfPlayers; round++) {
-    // Sorteia a ordem dos times nesta rodada
-    const teamOrder = shuffleArray([...Array(numberOfTeams).keys()]);
-    for (const teamIdx of teamOrder) {
-      // Pega o próximo jogador disponível
-      const playerIdx = teams.reduce((acc, team) => acc + team.players.length, 0);
-      if (playerIdx >= randomizedSortedPlayers.length) break;
-      teams[teamIdx].players.push(randomizedSortedPlayers[playerIdx]);
+  // Faz múltiplas tentativas para encontrar a melhor distribuição
+  for (let i = 0; i < tentativas; i++) {
+    const { difference, teams } = sortear1(
+      selectedPlayers,
+      numberOfTeams,
+      numberOfPlayers,
+    );
+    if (difference < menorDif) {
+      melhorTimes = teams;
+      menorDif = difference;
     }
   }
 
-  // Calcula médias
-  for (const team of teams) {
-    const total = team.players.reduce((sum, p) => sum + p.score, 0);
-    team.average = team.players.length
-      ? Number((total / team.players.length).toFixed(2))
-      : 0;
-  }
+  // Converte para o formato TeamResult
+  const result: TeamResult[] = melhorTimes.map((time) => {
+    const total = time.reduce((sum, player) => sum + player.score, 0);
+    const average = time.length ? Number((total / time.length).toFixed(3)) : 0;
+    return {
+      players: time,
+      average,
+    };
+  });
 
-  return teams;
+  return result;
 }
 
 export { checkRules, sortBalancedTeams };
