@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { OctagonX } from "lucide-react";
-import { playersMock } from "@/mocks/players";
+import { getAllPlayers } from "@/mocks/players";
 
 import {
   DialogContent,
@@ -18,6 +18,7 @@ interface AverageModalProps {
 }
 
 const getFilteredPlayers = (type: AverageModalProps["type"]) => {
+  const allPlayers = getAllPlayers();
   const filterFn =
     type === "above-average"
       ? (player: { score: number }) => player.score >= 3
@@ -28,7 +29,7 @@ const getFilteredPlayers = (type: AverageModalProps["type"]) => {
       ? (a: { score: number }, b: { score: number }) => b.score - a.score
       : (a: { score: number }, b: { score: number }) => b.score - a.score;
 
-  return playersMock.filter(filterFn).sort(sortFn);
+  return allPlayers.filter(filterFn).sort(sortFn);
 };
 
 const getTitleAndDescription = (type: AverageModalProps["type"]) => {

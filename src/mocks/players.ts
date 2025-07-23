@@ -1,5 +1,14 @@
 import type { Player } from "@/types/player";
 
+// Função para obter jogadores temporários do localStorage
+function getTempPlayers(): Player[] {
+  if (typeof window !== "undefined") {
+    const stored = localStorage.getItem("tempPlayers");
+    return stored ? JSON.parse(stored) : [];
+  }
+  return [];
+}
+
 const playersMock: Player[] = [
   { id: "e1f2", name: "Marcelo Santana", score: 4.25, position: "MEI" },
   { id: "a1b2", name: "Davi Silva", score: 1.5, position: "ATA" },
@@ -62,6 +71,10 @@ const playersMock: Player[] = [
   { id: "q1r2", name: "Leodecio Segundo", score: 3.2, position: "MEI" },
   { id: "s3t4", name: "Breno A.", score: 2.6, position: "MEI" },
   { id: "u5v6", name: "Kesley", score: 2.4, position: "MEI" },
+  { id: "a5q3", name: "Igor Inácio", score: 2, position: "MEI" },
+  { id: "z256", name: "Alef", score: 2, position: "MEI" },
+  { id: "a5q3", name: "Henrique Sávio", score: 2.2, position: "MEI" },
+  { id: "b5v4", name: "Hiarley", score: 4.4, position: "MEI" },
   {
     id: "m3n4",
     name: "Mateus Felipe (Ex Goleiro)",
@@ -71,15 +84,24 @@ const playersMock: Player[] = [
 ];
 
 function getPlayersPage(page: number, pageSize = 10, search: string): Player[] {
+  const tempPlayers = getTempPlayers();
+  const allPlayers = [...playersMock, ...tempPlayers];
+
   const start = (page - 1) * pageSize;
   if (search) {
-    return playersMock
+    return allPlayers
       .filter((player) =>
         player.name.toLowerCase().includes(search.toLowerCase()),
       )
       .slice(start, start + pageSize);
   }
-  return playersMock.slice(start, start + pageSize);
+  return allPlayers.slice(start, start + pageSize);
 }
 
-export { playersMock, getPlayersPage };
+// Função para obter todos os jogadores (incluindo temporários)
+function getAllPlayers(): Player[] {
+  const tempPlayers = getTempPlayers();
+  return [...playersMock, ...tempPlayers];
+}
+
+export { playersMock, getPlayersPage, getAllPlayers };
