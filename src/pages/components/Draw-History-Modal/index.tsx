@@ -44,7 +44,7 @@ const DrawHistoryModal: React.FC = () => {
 
       <ScrollArea className="h-75 w-full border">
         {drawHistory.length === 0 ? (
-          <div className="flex h-full items-center justify-center">
+          <div className="mt-4 flex h-full items-center justify-center">
             <span className="text-muted-foreground">
               Nenhum sorteio salvo ainda.
             </span>

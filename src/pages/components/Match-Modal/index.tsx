@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Copy, CopyCheck, Download } from "lucide-react";
+import { Copy, CopyCheck, Share2 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 
@@ -40,16 +40,10 @@ const MatchModal: React.FC<MatchModalProps> = ({ teams }) => {
     setTimeout(() => setIsCopied(false), 5000);
   }
 
-  function exportToFile() {
+  function shareOnWhatsApp() {
     const text = formatTeamsText();
-    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `times-${new Date().toISOString().slice(0, 10)}.txt`;
-    a.click();
-    URL.revokeObjectURL(url);
-    toast.success("Arquivo exportado com sucesso!");
+    const encoded = encodeURIComponent(text);
+    window.open(`https://wa.me/?text=${encoded}`, "_blank");
   }
 
   return (
@@ -96,9 +90,9 @@ const MatchModal: React.FC<MatchModalProps> = ({ teams }) => {
           )}
           Copiar lista
         </Button>
-        <Button variant="outline" type="button" onClick={exportToFile}>
-          <Download className="mr h-4 w-4" />
-          Exportar
+        <Button variant="outline" type="button" onClick={shareOnWhatsApp}>
+          <Share2 className="h-4 w-4" />
+          Enviar no Wapp
         </Button>
       </DialogFooter>
     </DialogContent>
