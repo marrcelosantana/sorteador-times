@@ -79,7 +79,7 @@ const MatchModal: React.FC<MatchModalProps> = ({ teams }) => {
 
       <DialogFooter
         className={cn(
-          "mt-5 flex w-full items-center !justify-between gap-4 sm:gap-1",
+          "mt-5 flex w-full flex-row flex-nowrap items-center justify-between! gap-4 sm:gap-1",
         )}
       >
         <Button variant="outline" type="button" onClick={copyToClipboard}>
@@ -88,11 +88,11 @@ const MatchModal: React.FC<MatchModalProps> = ({ teams }) => {
           ) : (
             <Copy className="h-4 w-4" />
           )}
-          Copiar lista
+          Copiar
         </Button>
         <Button variant="outline" type="button" onClick={shareOnWhatsApp}>
           <Share2 className="h-4 w-4" />
-          Enviar no Wapp
+          WhatsApp
         </Button>
       </DialogFooter>
     </DialogContent>
