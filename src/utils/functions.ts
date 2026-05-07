@@ -1,4 +1,4 @@
-import type { PayloadType, Player } from "@/types/player";
+import type { PayloadType, Player, TeamResult } from "@/types/player";
 import { toast } from "sonner";
 
 function checkRules(payload: PayloadType): boolean {
@@ -35,11 +35,6 @@ function checkRules(payload: PayloadType): boolean {
 
   return true;
 }
-
-export type TeamResult = {
-  players: Player[];
-  average: number;
-};
 
 function shuffleArray<T>(array: T[]): T[] {
   const arr = [...array];

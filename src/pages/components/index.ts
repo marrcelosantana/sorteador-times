@@ -7,6 +7,7 @@ import ViewMatchListModal from "./View-Match-List-Modal";
 import MatchModal from "./Match-Modal";
 import AverageModal from "./Average-Modal";
 import NewPlayerModal from "./New-Player-Modal";
+import DrawHistoryModal from "./Draw-History-Modal";
 
 export {
   Header,
@@ -18,4 +19,5 @@ export {
   MatchModal,
   AverageModal,
   NewPlayerModal,
+  DrawHistoryModal,
 };

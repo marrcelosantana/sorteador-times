@@ -10,3 +10,14 @@ export type PayloadType = {
   numberOfPlayers: number;
   matchList: Player[];
 };
+
+export type TeamResult = {
+  players: Player[];
+  average: number;
+};
+
+export type DrawHistory = {
+  id: string;
+  date: string;
+  teams: TeamResult[];
+};

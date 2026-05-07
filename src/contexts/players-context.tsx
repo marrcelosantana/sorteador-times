@@ -1,4 +1,4 @@
-import type { Player } from "@/types/player";
+import type { DrawHistory, Player, TeamResult } from "@/types/player";
 import { createContext, useEffect, useState } from "react";
 
 interface PlayersContextType {
@@ -6,6 +6,9 @@ interface PlayersContextType {
   addOrRemoveFromMatchList: (player: Player) => void;
   isPlayerInMatchList: (player: Player) => boolean;
   clearMatchList: () => void;
+  drawHistory: DrawHistory[];
+  saveDrawToHistory: (teams: TeamResult[]) => void;
+  clearHistory: () => void;
 }
 
 interface PlayersProviderProps {
@@ -17,6 +20,11 @@ export const PlayersContext = createContext({} as PlayersContextType);
 export function PlayersProvider({ children }: PlayersProviderProps) {
   const [matchList, setMatchList] = useState<Player[]>(() => {
     const stored = localStorage.getItem("matchList");
+    return stored ? JSON.parse(stored) : [];
+  });
+
+  const [drawHistory, setDrawHistory] = useState<DrawHistory[]>(() => {
+    const stored = localStorage.getItem("drawHistory");
     return stored ? JSON.parse(stored) : [];
   });
 
@@ -40,9 +48,27 @@ export function PlayersProvider({ children }: PlayersProviderProps) {
     return matchList.some((p) => p.id === player.id);
   };
 
+  function saveDrawToHistory(teams: TeamResult[]) {
+    const newDraw: DrawHistory = {
+      id: crypto.randomUUID(),
+      date: new Date().toISOString(),
+      teams,
+    };
+    setDrawHistory((prev) => [newDraw, ...prev]);
+  }
+
+  function clearHistory() {
+    setDrawHistory([]);
+    localStorage.removeItem("drawHistory");
+  }
+
   useEffect(() => {
     localStorage.setItem("matchList", JSON.stringify(matchList));
   }, [matchList]);
+
+  useEffect(() => {
+    localStorage.setItem("drawHistory", JSON.stringify(drawHistory));
+  }, [drawHistory]);
 
   return (
     <PlayersContext.Provider
@@ -51,6 +77,9 @@ export function PlayersProvider({ children }: PlayersProviderProps) {
         addOrRemoveFromMatchList,
         isPlayerInMatchList,
         clearMatchList,
+        drawHistory,
+        saveDrawToHistory,
+        clearHistory,
       }}
     >
       {children}

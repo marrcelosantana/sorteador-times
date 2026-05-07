@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { TeamResult } from "@/utils/functions";
+import type { TeamResult } from "@/types/player";
 
 import {
   DialogContent,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Copy, CopyCheck } from "lucide-react";
+import { Copy, CopyCheck, Download } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
 
@@ -22,19 +22,34 @@ interface MatchModalProps {
 const MatchModal: React.FC<MatchModalProps> = ({ teams }) => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
-  function copyToClipboard() {
-    const text = teams
+  function formatTeamsText() {
+    return teams
       .map(
         (team, idx) =>
           `Time ${idx + 1} - Média: ${team.average}\n` +
           team.players.map((p) => `- ${p.name} | ${p.score}`).join("\n"),
       )
       .join("\n\n");
+  }
 
+  function copyToClipboard() {
+    const text = formatTeamsText();
     navigator.clipboard.writeText(text);
     setIsCopied(true);
     toast.success("Lista copiada para a área de transferência!");
     setTimeout(() => setIsCopied(false), 5000);
+  }
+
+  function exportToFile() {
+    const text = formatTeamsText();
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `times-${new Date().toISOString().slice(0, 10)}.txt`;
+    a.click();
+    URL.revokeObjectURL(url);
+    toast.success("Arquivo exportado com sucesso!");
   }
 
   return (
@@ -77,9 +92,13 @@ const MatchModal: React.FC<MatchModalProps> = ({ teams }) => {
           {isCopied ? (
             <CopyCheck className="mr-2 h-4 w-4"></CopyCheck>
           ) : (
-            <Copy className="mr-2 h-4 w-4" />
+            <Copy className="h-4 w-4" />
           )}
           Copiar lista
+        </Button>
+        <Button variant="outline" type="button" onClick={exportToFile}>
+          <Download className="mr h-4 w-4" />
+          Exportar
         </Button>
       </DialogFooter>
     </DialogContent>

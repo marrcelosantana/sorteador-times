@@ -9,8 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   checkRules,
   sortBalancedTeams,
-  type TeamResult,
 } from "@/utils/functions";
+import type { TeamResult } from "@/types/player";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -48,7 +48,7 @@ function Loader() {
 }
 
 const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
-  const { matchList } = usePlayers();
+  const { matchList, saveDrawToHistory } = usePlayers();
 
   const [viewMatchModalOpen, setViewMatchModalOpen] = useState(false);
   const [matchModalOpen, setMatchModalOpen] = useState(false);
@@ -88,6 +88,7 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
     );
 
     setTeams(teams);
+    saveDrawToHistory(teams);
 
     setTimeout(() => {
       toast.success("Sorteio realizado com sucesso!");
