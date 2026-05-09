@@ -49,16 +49,13 @@ const Home: React.FC = () => {
     <div className="h-screen w-full">
       <Header />
       <div className="w-full flex-1">
-        <div className="mb-1 flex w-full flex-col items-center justify-between px-8 py-4 lg:flex-row">
-          <h1 className="mb-4 text-3xl font-bold tracking-tight lg:mb-0">
-            Jogadores
-          </h1>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col items-center justify-center gap-6 lg:flex-row">
+        <div className="mb-1 flex w-full flex-col items-start justify-end px-8 py-4 lg:flex-row lg:items-center">
+          <div className="flex w-full flex-col gap-4">
+            <div className="flex w-full flex-col items-center justify-center gap-6 lg:flex-row">
               <InfoCard type="total" data={allPlayers.length} />
               <Dialog open={aboveModalOpen} onOpenChange={setAboveModalOpen}>
                 <DialogTrigger asChild>
-                  <span className="cursor-pointer">
+                  <span className="w-full cursor-pointer">
                     <InfoCard type="above-average" data={aboveAverage} />
                   </span>
                 </DialogTrigger>
@@ -67,7 +64,7 @@ const Home: React.FC = () => {
 
               <Dialog open={belowModalOpen} onOpenChange={setAverageModalOpen}>
                 <DialogTrigger asChild>
-                  <span className="cursor-pointer">
+                  <span className="w-full cursor-pointer">
                     <InfoCard type="below-average" data={belowAverage} />
                   </span>
                 </DialogTrigger>

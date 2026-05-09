@@ -37,7 +37,7 @@ const InfoCard: React.FC<InfoCardProps> = ({ type, data }) => {
   const { title, icon, description } = cardConfig[type];
 
   return (
-    <Card className="border-accent-foreground h-[140px] w-[300px]">
+    <Card className="border-accent-foreground h-35 w-full">
       <CardHeader className="flex-row items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-base font-semibold">{title}</CardTitle>
         {icon}
