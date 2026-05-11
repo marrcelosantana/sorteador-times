@@ -43,9 +43,6 @@ const schema = z.object({
 type FormDataType = z.infer<typeof schema>;
 
 const DRAW_PRESETS = [
-  { label: "3 times de 4 jogadores", numberOfTeams: 3, numberOfPlayers: 4 },
-  { label: "4 times de 4 jogadores", numberOfTeams: 4, numberOfPlayers: 4 },
-  { label: "2 times de 5 jogadores", numberOfTeams: 2, numberOfPlayers: 5 },
   { label: "3 times de 5 jogadores", numberOfTeams: 3, numberOfPlayers: 5 },
   { label: "4 times de 5 jogadores", numberOfTeams: 4, numberOfPlayers: 5 },
 ] as const;
