@@ -27,36 +27,37 @@ const PlayersTable: React.FC<PlayersTableProps> = ({ data }) => {
       <TableHeader>
         <TableRow>
           <TableHead></TableHead>
-          <TableHead>Nome</TableHead>
-          <TableHead>Nota</TableHead>
-          <TableHead>Posição</TableHead>
-          <TableHead>Ações</TableHead>
+          <TableHead>NOME</TableHead>
+          <TableHead>NOTA</TableHead>
+          <TableHead>POSIÇÃO</TableHead>
+          <TableHead>AÇÕES</TableHead>
+          <TableHead className="w-0"></TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {data?.map((player: Player) => (
           <TableRow key={player.id}>
             <TableCell></TableCell>
-            <TableCell className="!w-[70vw] truncate font-medium">
+            <TableCell className="w-[70vw]! truncate font-medium">
               {player.name}
             </TableCell>
             <TableCell
-              className={cn("max-w-[120px] truncate font-medium", {
+              className={cn("max-w-30 truncate font-medium", {
                 "text-green-400": player.score >= 3,
                 "text-red-400": player.score < 3,
               })}
             >
               {player.score}
             </TableCell>
-            <TableCell className="max-w-[120px] truncate font-mono text-xs font-medium">
+            <TableCell className="max-w-30 truncate font-mono text-xs font-medium">
               {player.position}
             </TableCell>
-            <TableCell className="max-w-[120px]">
+            <TableCell className="max-w-30">
               <Button
                 variant="outline"
                 onClick={() => addOrRemoveFromMatchList(player)}
                 className={cn("flex items-center gap-2", {
-                  "!text-red-400 hover:text-red-500":
+                  "text-red-400! hover:text-red-500":
                     isPlayerInMatchList(player),
                 })}
               >

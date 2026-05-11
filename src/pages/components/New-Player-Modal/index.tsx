@@ -162,7 +162,7 @@ const NewPlayerModal: React.FC<NewPlayerModalProps> = ({
               setValue("position", value as "ATA" | "MEI" | "DEF")
             }
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Selecione a posição" />
             </SelectTrigger>
             <SelectContent>

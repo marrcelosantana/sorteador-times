@@ -6,16 +6,15 @@ import { z } from "zod";
 import { LoaderIcon, Search } from "lucide-react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import {
-  checkRules,
-  sortBalancedTeams,
-} from "@/utils/functions";
+import { checkRules, sortBalancedTeams } from "@/utils/functions";
 import type { TeamResult } from "@/types/player";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
+
+import { cn } from "@/lib/utils";
 
 import {
   Dialog,
@@ -43,6 +42,14 @@ const schema = z.object({
 
 type FormDataType = z.infer<typeof schema>;
 
+const DRAW_PRESETS = [
+  { label: "3 times de 4 jogadores", numberOfTeams: 3, numberOfPlayers: 4 },
+  { label: "4 times de 4 jogadores", numberOfTeams: 4, numberOfPlayers: 4 },
+  { label: "2 times de 5 jogadores", numberOfTeams: 2, numberOfPlayers: 5 },
+  { label: "3 times de 5 jogadores", numberOfTeams: 3, numberOfPlayers: 5 },
+  { label: "4 times de 5 jogadores", numberOfTeams: 4, numberOfPlayers: 5 },
+] as const;
+
 function Loader() {
   return <LoaderIcon className="h-4 w-4 animate-spin" />;
 }
@@ -54,6 +61,7 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
   const [matchModalOpen, setMatchModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [teams, setTeams] = useState<TeamResult[]>([]);
+  const [drawDate, setDrawDate] = useState<string>();
 
   const {
     handleSubmit,
@@ -66,6 +74,15 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
   });
 
   const values = watch();
+
+  function handleSelectPreset(preset: (typeof DRAW_PRESETS)[number]) {
+    setValue("numberOfTeams", preset.numberOfTeams, {
+      shouldValidate: true,
+    });
+    setValue("numberOfPlayers", preset.numberOfPlayers, {
+      shouldValidate: true,
+    });
+  }
 
   function handleNewDraw(data: FormDataType) {
     setIsLoading(true);
@@ -87,8 +104,11 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
       payload.numberOfPlayers,
     );
 
+    const currentDrawDate = new Date().toISOString();
+
     setTeams(teams);
-    saveDrawToHistory(teams);
+    setDrawDate(currentDrawDate);
+    saveDrawToHistory(teams, currentDrawDate);
 
     setTimeout(() => {
       toast.success("Sorteio realizado com sucesso!");
@@ -111,6 +131,34 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
         </DialogDescription>
       </DialogHeader>
       <form className="w-full space-y-7" onSubmit={handleSubmit(handleNewDraw)}>
+        <div className="flex w-full flex-col gap-3">
+          <Label className="text-sm">Presets de partida</Label>
+
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {DRAW_PRESETS.map((preset) => {
+              const isSelected =
+                values.numberOfTeams === preset.numberOfTeams &&
+                values.numberOfPlayers === preset.numberOfPlayers;
+
+              return (
+                <Button
+                  key={preset.label}
+                  type="button"
+                  variant="outline"
+                  className={cn(
+                    "h-auto justify-start px-3 py-2 text-left whitespace-normal",
+                    isSelected &&
+                      "border-primary bg-primary/10 text-primary hover:bg-primary/15",
+                  )}
+                  onClick={() => handleSelectPreset(preset)}
+                >
+                  {preset.label}
+                </Button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="flex w-full flex-col gap-2">
           <Label htmlFor="number-of-teams" className="text-sm">
             Quantidade de times
@@ -186,7 +234,7 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
       </form>
 
       <Dialog open={matchModalOpen} onOpenChange={setMatchModalOpen}>
-        <MatchModal teams={teams} />
+        <MatchModal teams={teams} drawDate={drawDate} />
       </Dialog>
     </DialogContent>
   );

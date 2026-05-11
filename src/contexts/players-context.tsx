@@ -7,7 +7,7 @@ interface PlayersContextType {
   isPlayerInMatchList: (player: Player) => boolean;
   clearMatchList: () => void;
   drawHistory: DrawHistory[];
-  saveDrawToHistory: (teams: TeamResult[]) => void;
+  saveDrawToHistory: (teams: TeamResult[], date?: string) => void;
   clearHistory: () => void;
 }
 
@@ -48,10 +48,10 @@ export function PlayersProvider({ children }: PlayersProviderProps) {
     return matchList.some((p) => p.id === player.id);
   };
 
-  function saveDrawToHistory(teams: TeamResult[]) {
+  function saveDrawToHistory(teams: TeamResult[], date?: string) {
     const newDraw: DrawHistory = {
       id: crypto.randomUUID(),
-      date: new Date().toISOString(),
+      date: date || new Date().toISOString(),
       teams,
     };
     setDrawHistory((prev) => [newDraw, ...prev]);

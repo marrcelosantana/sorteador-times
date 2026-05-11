@@ -73,37 +73,40 @@ const Home: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="mt-2 flex flex-col items-start justify-between gap-4 pr-8 pl-4 sm:flex-row sm:items-center">
-          <Dialog
-            open={newPlayerModalOpen}
-            onOpenChange={setNewPlayerModalOpen}
-          >
-            <DialogTrigger asChild>
-              <Button variant="secondary" className="w-full sm:w-auto">
-                <Plus className="mr-2 h-4 w-4" />
-                Add jogador temporário
-              </Button>
-            </DialogTrigger>
-            <NewPlayerModal
-              isModalOpen={newPlayerModalOpen}
-              setModalOpen={setNewPlayerModalOpen}
-            />
-          </Dialog>
-          <div className="flex w-full flex-col items-start gap-4 sm:w-auto sm:flex-row sm:items-center">
-            <Input
-              className="w-full sm:w-[250px]"
-              placeholder="Pesquisar nome do jogador..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
+        <div className="mt-2 flex flex-wrap items-center gap-2 px-8 sm:flex-nowrap sm:justify-between sm:gap-4">
+          <div className="w-[calc(50%-0.25rem)] sm:w-auto">
+            <Dialog
+              open={newPlayerModalOpen}
+              onOpenChange={setNewPlayerModalOpen}
+            >
+              <DialogTrigger asChild>
+                <Button
+                  variant="secondary"
+                  className="w-full min-w-0 px-2 text-xs whitespace-normal sm:w-auto sm:px-4 sm:text-sm"
+                >
+                  <Plus className="h-4 w-4" />
+                  Adicionar jogador
+                </Button>
+              </DialogTrigger>
+              <NewPlayerModal
+                isModalOpen={newPlayerModalOpen}
+                setModalOpen={setNewPlayerModalOpen}
+              />
+            </Dialog>
+          </div>
+
+          <div className="w-[calc(50%-0.25rem)] sm:order-3 sm:w-auto">
             <Dialog
               open={viewMatchModalOpen}
               onOpenChange={setViewMatchModalOpen}
             >
               <DialogTrigger asChild>
-                <Button variant="outline" className="w-full sm:w-auto">
+                <Button
+                  variant="outline"
+                  className="w-full min-w-0 px-2 text-xs whitespace-normal sm:w-auto sm:px-4 sm:text-sm"
+                >
                   <List />
-                  Visualizar lista do racha
+                  Visualizar lista
                   {matchList.length > 0 && (
                     <span className="bg-primary dark:bg-primary-foreground flex items-center justify-center rounded-xl px-2 text-white">
                       {matchList.length}
@@ -114,6 +117,13 @@ const Home: React.FC = () => {
               <ViewMatchListModal />
             </Dialog>
           </div>
+
+          <Input
+            className="order-3 w-full sm:order-2 sm:ml-auto sm:w-62.5"
+            placeholder="Pesquisar nome do jogador..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
         </div>
         {players.length > 0 ? (
           <div className="mt-4">

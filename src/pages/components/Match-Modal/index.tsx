@@ -11,43 +11,38 @@ import {
 } from "@/components/ui/dialog";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Copy, CopyCheck, Share2 } from "lucide-react";
+import { Copy, CopyCheck, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
+import { formatDrawMessage, getWhatsAppShareUrl } from "@/utils/share";
 
 interface MatchModalProps {
   teams: TeamResult[];
+  drawDate?: string;
 }
 
-const MatchModal: React.FC<MatchModalProps> = ({ teams }) => {
+const MatchModal: React.FC<MatchModalProps> = ({ teams, drawDate }) => {
   const [isCopied, setIsCopied] = useState<boolean>(false);
 
-  function formatTeamsText() {
-    return teams
-      .map(
-        (team, idx) =>
-          `Time ${idx + 1} - Média: ${team.average}\n` +
-          team.players.map((p) => `- ${p.name} | ${p.score}`).join("\n"),
-      )
-      .join("\n\n");
-  }
+  const shareMessage = formatDrawMessage({ teams, date: drawDate });
 
-  function copyToClipboard() {
-    const text = formatTeamsText();
-    navigator.clipboard.writeText(text);
-    setIsCopied(true);
-    toast.success("Lista copiada para a área de transferência!");
-    setTimeout(() => setIsCopied(false), 5000);
+  async function copyToClipboard() {
+    try {
+      await navigator.clipboard.writeText(shareMessage);
+      setIsCopied(true);
+      toast.success("Lista copiada para a área de transferência!");
+      setTimeout(() => setIsCopied(false), 5000);
+    } catch {
+      toast.error("Não foi possível copiar a lista.");
+    }
   }
 
   function shareOnWhatsApp() {
-    const text = formatTeamsText();
-    const encoded = encodeURIComponent(text);
-    window.open(`https://wa.me/?text=${encoded}`, "_blank");
+    window.open(getWhatsAppShareUrl(shareMessage), "_blank", "noreferrer");
   }
 
   return (
-    <DialogContent className="flex h-[500px] flex-col justify-between">
+    <DialogContent className="flex h-125 flex-col justify-between">
       <DialogHeader>
         <DialogTitle className="text-2xl">Racha formado!</DialogTitle>
         <DialogDescription>
@@ -55,7 +50,7 @@ const MatchModal: React.FC<MatchModalProps> = ({ teams }) => {
         </DialogDescription>
       </DialogHeader>
 
-      <ScrollArea className="h-[300px] w-full border-1">
+      <ScrollArea className="h-75 w-full border">
         {teams.map((team, idx) => {
           return (
             <div
@@ -79,19 +74,29 @@ const MatchModal: React.FC<MatchModalProps> = ({ teams }) => {
 
       <DialogFooter
         className={cn(
-          "mt-5 flex w-full flex-row flex-nowrap items-center justify-between! gap-4 sm:gap-1",
+          "mt-5 grid w-full grid-cols-2 gap-2 sm:flex sm:items-center sm:justify-end",
         )}
       >
-        <Button variant="outline" type="button" onClick={copyToClipboard}>
+        <Button
+          variant="outline"
+          type="button"
+          className="px-2 text-xs sm:px-4 sm:text-sm"
+          onClick={copyToClipboard}
+        >
           {isCopied ? (
-            <CopyCheck className="mr-2 h-4 w-4"></CopyCheck>
+            <CopyCheck className="h-4 w-4"></CopyCheck>
           ) : (
             <Copy className="h-4 w-4" />
           )}
           Copiar
         </Button>
-        <Button variant="outline" type="button" onClick={shareOnWhatsApp}>
-          <Share2 className="h-4 w-4" />
+        <Button
+          variant="outline"
+          type="button"
+          className="px-2 text-xs sm:px-4 sm:text-sm"
+          onClick={shareOnWhatsApp}
+        >
+          <MessageCircle className="h-4 w-4" />
           WhatsApp
         </Button>
       </DialogFooter>
