@@ -109,7 +109,7 @@ const NewPlayerModal: React.FC<NewPlayerModalProps> = ({
   }, [isModalOpen, reset]);
 
   return (
-    <DialogContent className="w-[400px]">
+    <DialogContent className="w-full max-w-md">
       <DialogHeader className="mb-2">
         <DialogTitle className="text-2xl">Adicionar jogador</DialogTitle>
         <DialogDescription>

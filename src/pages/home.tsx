@@ -1,6 +1,6 @@
 import type { Player } from "@/types/player";
 
-import { List, Plus } from "lucide-react";
+import { List, Plus, Search, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
@@ -46,46 +46,52 @@ const Home: React.FC = () => {
   }, [search]);
 
   return (
-    <div className="h-screen w-full">
+    <div className="flex min-h-screen w-full flex-col">
       <Header />
-      <div className="w-full flex-1">
-        <div className="mb-1 flex w-full flex-col items-start justify-end px-8 py-4 lg:flex-row lg:items-center">
-          <div className="flex w-full flex-col gap-4">
-            <div className="flex w-full flex-col items-center justify-center gap-6 lg:flex-row">
-              <InfoCard type="total" data={allPlayers.length} />
-              <Dialog open={aboveModalOpen} onOpenChange={setAboveModalOpen}>
-                <DialogTrigger asChild>
-                  <span className="w-full cursor-pointer">
-                    <InfoCard type="above-average" data={aboveAverage} />
-                  </span>
-                </DialogTrigger>
-                <AverageModal type="above-average" />
-              </Dialog>
+      <div className="flex flex-1 flex-col">
+        <div className="px-4 py-5 sm:px-8">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+            <InfoCard type="total" data={allPlayers.length} />
+            <Dialog open={aboveModalOpen} onOpenChange={setAboveModalOpen}>
+              <DialogTrigger asChild>
+                <span className="cursor-pointer">
+                  <InfoCard type="above-average" data={aboveAverage} />
+                </span>
+              </DialogTrigger>
+              <AverageModal type="above-average" />
+            </Dialog>
 
-              <Dialog open={belowModalOpen} onOpenChange={setAverageModalOpen}>
-                <DialogTrigger asChild>
-                  <span className="w-full cursor-pointer">
-                    <InfoCard type="below-average" data={belowAverage} />
-                  </span>
-                </DialogTrigger>
-                <AverageModal type="below-average" />
-              </Dialog>
-            </div>
+            <Dialog open={belowModalOpen} onOpenChange={setAverageModalOpen}>
+              <DialogTrigger asChild>
+                <span className="cursor-pointer">
+                  <InfoCard type="below-average" data={belowAverage} />
+                </span>
+              </DialogTrigger>
+              <AverageModal type="below-average" />
+            </Dialog>
           </div>
         </div>
-        <div className="mt-2 flex flex-wrap items-center gap-2 px-8 sm:flex-nowrap sm:justify-between sm:gap-4">
-          <div className="w-[calc(50%-0.25rem)] sm:w-auto">
+
+        <div className="flex flex-wrap items-center gap-3 border-b px-4 pb-4 sm:flex-nowrap sm:gap-3 sm:px-8">
+          <div className="relative order-2 w-full sm:order-1 sm:w-auto">
+            <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+            <Input
+              className="h-10 w-full pl-9 sm:w-96"
+              placeholder="Pesquisar jogador..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+
+          <div className="order-1 ml-auto flex gap-2 sm:order-2">
             <Dialog
               open={newPlayerModalOpen}
               onOpenChange={setNewPlayerModalOpen}
             >
               <DialogTrigger asChild>
-                <Button
-                  variant="secondary"
-                  className="w-full min-w-0 px-2 text-xs whitespace-normal sm:w-auto sm:px-4 sm:text-sm"
-                >
+                <Button className="gap-1.5 text-white shadow-sm" size="lg">
                   <Plus className="h-4 w-4" />
-                  Adicionar jogador
+                  <span>Adicionar jogador</span>
                 </Button>
               </DialogTrigger>
               <NewPlayerModal
@@ -93,22 +99,17 @@ const Home: React.FC = () => {
                 setModalOpen={setNewPlayerModalOpen}
               />
             </Dialog>
-          </div>
 
-          <div className="w-[calc(50%-0.25rem)] sm:order-3 sm:w-auto">
             <Dialog
               open={viewMatchModalOpen}
               onOpenChange={setViewMatchModalOpen}
             >
               <DialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="w-full min-w-0 px-2 text-xs whitespace-normal sm:w-auto sm:px-4 sm:text-sm"
-                >
-                  <List />
-                  Visualizar lista
+                <Button variant="outline" className="gap-1.5" size="lg">
+                  <List className="h-4 w-4" />
+                  <span>Ver lista</span>
                   {matchList.length > 0 && (
-                    <span className="bg-primary dark:bg-primary-foreground flex items-center justify-center rounded-xl px-2 text-white">
+                    <span className="bg-primary flex h-5 min-w-5 items-center justify-center rounded-full px-1.5 text-[11px] font-bold text-white">
                       {matchList.length}
                     </span>
                   )}
@@ -117,19 +118,15 @@ const Home: React.FC = () => {
               <ViewMatchListModal />
             </Dialog>
           </div>
-
-          <Input
-            className="order-3 w-full sm:order-2 sm:ml-auto sm:w-62.5"
-            placeholder="Pesquisar nome do jogador..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
         </div>
+
         {players.length > 0 ? (
-          <div className="mt-4">
-            <PlayersTable data={players} />
-            <div className="mt-4 pb-4">
-              {!search.length && (
+          <div className="flex flex-1 flex-col">
+            <div className="flex-1">
+              <PlayersTable data={players} />
+            </div>
+            {!search.length && (
+              <div className="border-t px-4 py-3 sm:px-8">
                 <Pagination
                   pageIndex={page - 1}
                   perPage={limit}
@@ -138,14 +135,24 @@ const Home: React.FC = () => {
                     setPage(newPageIndex + 1)
                   }
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
         ) : (
-          <div className="flex h-64 items-center justify-center">
-            <span className="text-muted-foreground">
-              Sem jogadores por aqui.
-            </span>
+          <div className="flex flex-1 flex-col items-center justify-center gap-3 py-20">
+            <div className="bg-muted flex h-16 w-16 items-center justify-center rounded-2xl">
+              <Users className="text-muted-foreground h-8 w-8" />
+            </div>
+            <div className="text-center">
+              <p className="text-foreground font-medium">
+                Nenhum jogador encontrado
+              </p>
+              <p className="text-muted-foreground mt-1 text-sm">
+                {search
+                  ? "Tente outro termo de busca."
+                  : "Adicione jogadores para começar."}
+              </p>
+            </div>
           </div>
         )}
       </div>

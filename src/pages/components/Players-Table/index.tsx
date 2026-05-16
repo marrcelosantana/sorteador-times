@@ -19,64 +19,140 @@ interface PlayersTableProps {
   data: Player[];
 }
 
+const avatarColors = [
+  "bg-primary/15 text-primary",
+  "bg-emerald/15 text-emerald",
+  "bg-coral/15 text-coral",
+  "bg-amber/15 text-amber",
+  "bg-chart-1/15 text-chart-1",
+  "bg-chart-2/15 text-chart-2",
+];
+
+function getAvatarColor(name: string) {
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return avatarColors[Math.abs(hash) % avatarColors.length];
+}
+
+function getInitials(name: string) {
+  // Remove anything inside parentheses before processing
+  const cleanName = name.replace(/\s*\(.*?\)\s*/g, " ").trim();
+  const parts = cleanName.split(/\s+/).filter(Boolean);
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return name.slice(0, 2).toUpperCase();
+}
+
+const positionConfig: Record<string, { label: string; className: string }> = {
+  ATA: { label: "ATA", className: "bg-coral/10 text-coral border-coral/20" },
+  MEI: { label: "MEI", className: "bg-amber/10 text-amber border-amber/20" },
+  DEF: {
+    label: "DEF",
+    className: "bg-primary/10 text-primary border-primary/20",
+  },
+};
+
 const PlayersTable: React.FC<PlayersTableProps> = ({ data }) => {
   const { addOrRemoveFromMatchList, isPlayerInMatchList } = usePlayers();
 
   return (
-    <Table className="w-full border-y-2 border-r-2">
+    <Table className="w-full">
       <TableHeader>
-        <TableRow>
-          <TableHead></TableHead>
-          <TableHead>NOME</TableHead>
-          <TableHead>NOTA</TableHead>
-          <TableHead>POSIÇÃO</TableHead>
-          <TableHead>AÇÕES</TableHead>
-          <TableHead className="w-0"></TableHead>
+        <TableRow className="hover:bg-transparent">
+          <TableHead />
+          <TableHead className="text-muted-foreground w-[40%] text-xs font-semibold tracking-wider uppercase">
+            Nome
+          </TableHead>
+          <TableHead className="text-muted-foreground w-[20%] text-xs font-semibold tracking-wider uppercase">
+            Nota
+          </TableHead>
+          <TableHead className="text-muted-foreground w-[20%] text-xs font-semibold tracking-wider uppercase">
+            Posição
+          </TableHead>
+          <TableHead className="text-muted-foreground w-[20%] text-xs font-semibold tracking-wider uppercase">
+            Ações
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data?.map((player: Player) => (
-          <TableRow key={player.id}>
-            <TableCell></TableCell>
-            <TableCell className="w-[70vw]! truncate font-medium">
-              {player.name}
-            </TableCell>
-            <TableCell
-              className={cn("max-w-30 truncate font-medium", {
-                "text-green-400": player.score >= 3,
-                "text-red-400": player.score < 3,
-              })}
+        {data?.map((player: Player) => {
+          const inMatch = isPlayerInMatchList(player);
+          return (
+            <TableRow
+              key={player.id}
+              className={cn(
+                "transition-colors",
+                inMatch && "bg-primary/5 dark:bg-primary/10",
+              )}
             >
-              {player.score}
-            </TableCell>
-            <TableCell className="max-w-30 truncate font-mono text-xs font-medium">
-              {player.position}
-            </TableCell>
-            <TableCell className="max-w-30">
-              <Button
-                variant="outline"
-                onClick={() => addOrRemoveFromMatchList(player)}
-                className={cn("flex items-center gap-2", {
-                  "text-red-400! hover:text-red-500":
-                    isPlayerInMatchList(player),
-                })}
-              >
-                {isPlayerInMatchList(player) ? (
-                  <>
-                    <span className="hidden sm:inline">Remover do Racha</span>
-                    <UserMinus className="h-4 w-4 md:ml-1" />
-                  </>
-                ) : (
-                  <>
-                    <span className="hidden sm:inline">Adicionar ao Racha</span>
-                    <UserPlus className="h-4 w-4" />
-                  </>
+              <TableCell />
+              <TableCell className="font-medium">
+                <div className="flex items-center gap-2.5">
+                  <div
+                    className={cn(
+                      "flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-xs font-bold",
+                      getAvatarColor(player.name),
+                    )}
+                  >
+                    {getInitials(player.name)}
+                  </div>
+                  <span className="truncate">{player.name}</span>
+                </div>
+              </TableCell>
+              <TableCell>
+                <span
+                  className={cn(
+                    "inline-flex items-center justify-center rounded-sm px-2 py-1 text-xs font-semibold",
+                    player.score >= 3
+                      ? "bg-emerald/10 text-emerald"
+                      : "bg-coral/10 text-coral",
+                  )}
+                >
+                  {player.score}
+                </span>
+              </TableCell>
+              <TableCell>
+                {player.position && (
+                  <span
+                    className={cn(
+                      "inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium",
+                      positionConfig[player.position]?.className,
+                    )}
+                  >
+                    {player.position}
+                  </span>
                 )}
-              </Button>
-            </TableCell>
-            <TableCell className="w-0"></TableCell>
-          </TableRow>
-        ))}
+              </TableCell>
+              <TableCell>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => addOrRemoveFromMatchList(player)}
+                  className={cn(
+                    "justify-center gap-1.5 transition-all",
+                    inMatch
+                      ? "border-primary/30 bg-primary/10 text-primary hover:border-destructive/30 hover:bg-destructive/10 hover:text-destructive dark:bg-primary/20"
+                      : "",
+                  )}
+                >
+                  {inMatch ? (
+                    <>
+                      <UserMinus className="h-3.5 w-3.5" />
+                      <span>Remover do racha</span>
+                    </>
+                  ) : (
+                    <>
+                      <UserPlus className="h-3.5 w-3.5" />
+                      <span>Adicionar ao racha</span>
+                    </>
+                  )}
+                </Button>
+              </TableCell>
+            </TableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );

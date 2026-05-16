@@ -28,7 +28,7 @@ function formatDrawMessage({ teams, date }: FormatDrawMessageParams) {
       const players = team.players
         .map(
           (player) =>
-            `- [${player.position || "N/A"}] ${player.name} - Nota ${player.score}`,
+            `- [${player.position || "N/A"}] ${player.name} | ${player.score}`,
         )
         .join("\n");
 

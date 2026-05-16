@@ -202,7 +202,7 @@ const NewDrawModal: React.FC<NewDrawModalProps> = ({ isModalOpen }) => {
             onOpenChange={setViewMatchModalOpen}
           >
             <DialogTrigger asChild>
-              <Button variant="secondary" type="button" className="w-[220px]">
+              <Button variant="secondary" type="button" className="w-55">
                 <Search className="h-4 w-4" />
                 <span className="text-sm">Confira a lista do Racha</span>
               </Button>

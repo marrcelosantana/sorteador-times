@@ -4,7 +4,6 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
-  Copyright,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -25,30 +24,26 @@ const Pagination: React.FC<PaginationProps> = ({
   const pages = Math.ceil(totalCount / perPage) || 1;
 
   return (
-    <div className="flex items-center justify-between px-4 md:px-8">
-      <div className="text-muted-foreground space-x-1 text-sm whitespace-nowrap">
-        <span className="hidden md:inline">Total de</span>
-        <span>{totalCount}</span>
-        <span>
-          {totalCount > 0 && totalCount < 2 ? "jogador" : "jogadores"}
-        </span>
-      </div>
+    <div className="flex items-center justify-between">
+      <p className="text-sm text-muted-foreground">
+        <span className="hidden sm:inline">Total de </span>
+        <span className="font-medium text-foreground">{totalCount}</span>
+        {" "}
+        {totalCount === 1 ? "jogador" : "jogadores"}
+      </p>
 
-      <div className="hidden py-4 text-center sm:inline">
-        <span className="text-muted-foreground text-xs">
-          Criado por Marcelo Santana
+      <div className="flex items-center gap-4">
+        <span className="text-sm text-muted-foreground">
+          <span className="font-medium text-foreground">{pageIndex + 1}</span>
+          {" "}de{" "}
+          <span className="font-medium text-foreground">{pages}</span>
         </span>
-        <Copyright className="text-muted-foreground ml-1 inline h-4 w-4" />
-      </div>
-      <div className="flex items-center gap-6 lg:gap-8">
-        <div className="text-sm font-medium">
-          Pag {pageIndex + 1} de {pages}
-        </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
             onClick={() => onPageChange(0)}
             disabled={pageIndex === 0}
           >
@@ -57,8 +52,9 @@ const Pagination: React.FC<PaginationProps> = ({
           </Button>
 
           <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
             onClick={() => onPageChange(pageIndex - 1)}
             disabled={pageIndex === 0}
           >
@@ -67,8 +63,9 @@ const Pagination: React.FC<PaginationProps> = ({
           </Button>
 
           <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
             onClick={() => onPageChange(pageIndex + 1)}
             disabled={pages <= pageIndex + 1}
           >
@@ -77,8 +74,9 @@ const Pagination: React.FC<PaginationProps> = ({
           </Button>
 
           <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
             onClick={() => onPageChange(pages - 1)}
             disabled={pages <= pageIndex + 1}
           >

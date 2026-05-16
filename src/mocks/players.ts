@@ -43,7 +43,7 @@ const playersMock: Player[] = [
   { id: "k3l4", name: "Lucca Oliveira", score: 2.2, position: "ATA" },
   { id: "m5n6", name: "Morvan Carvalho", score: 3.2, position: "MEI" },
   { id: "q9r0", name: "Roberto Julio", score: 3.65, position: "DEF" },
-  { id: "s1t2", name: "Vinicius Cabral", score: 4.8, position: "ATA" },
+  { id: "s1t2", name: "Vinicius Cabral", score: 5.0, position: "ATA" },
   { id: "u3v4", name: "Henrique Soares", score: 3.1, position: "DEF" },
   { id: "w5x6", name: "Israel Freitas (Negão)", score: 4.2, position: "ATA" },
   { id: "y7z8", name: "Pablu Ribeiro", score: 3.8, position: "MEI" },

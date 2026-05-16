@@ -5,7 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 function App() {
   return (
-    <ThemeProvider storageKey="pizzashop-theme" defaultTheme="system">
+    <ThemeProvider storageKey="sorteador-times-theme" defaultTheme="system">
       <PlayersProvider>
         <Home />
         <Toaster richColors />
