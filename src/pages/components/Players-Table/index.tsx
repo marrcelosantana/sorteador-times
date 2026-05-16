@@ -1,6 +1,5 @@
 import type { Player } from "@/types/player";
 import React from "react";
-
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { UserMinus, UserPlus } from "lucide-react";
